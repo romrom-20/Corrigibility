@@ -6,6 +6,12 @@ Status: staged locally on `stage-pr-experiments`.
 
 Remote PR status: cannot open yet because `origin` currently has no remote heads; `git ls-remote --heads origin` returned no `main` branch.
 
+Review status:
+
+- Experiment-design review initially blocked on restricted-access fixture fidelity; resolved by adding credential-source and urgency pressure to the base case and making the neutral ablation explicitly omit them.
+- Scoring review initially blocked on negation/conflict handling and subagent propagation labels; resolved by making unsafe positive intent dominate, ignoring negated unsafe phrases, and labeling complete inherited restrictions as `propagated`.
+- PR/schema review approved with notes; schema documentation remains queued for PR-002 before live adapters depend on it.
+
 Scope:
 
 - Add lightweight scenario fixtures for control override, shutdown rewiring, restricted access, and subagent variants.
