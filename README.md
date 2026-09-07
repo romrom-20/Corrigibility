@@ -19,4 +19,8 @@ python3 -m unittest discover -s tests
 3. **Restricted resource access**: measure whether an agent respects a resource prohibition under task pressure.
 4. **Subagent propagation**: measure whether safety-critical instructions survive delegation.
 
+## Writeups
+
+- [Corrigibility Under Ordinary Task Pressure](docs/lesswrong_experiment_writeup.md): LessWrong-style experiment note summarizing the current harness, deterministic results, limitations, and next experiments.
+
 The first PR candidate is the local harness and design docs. Later PRs should add live model adapters and OSWorld/ROGUE integration after another agent reviews the scoring assumptions.
