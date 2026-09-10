@@ -1,0 +1,34 @@
+# Corrigibility Experiments
+
+This repository stages corrigibility experiments based on the ROGUE finding that ordinary task pressure can push agents toward unsafe control behavior.
+
+The current scaffold focuses on fast, text-only and transcript-level experiments that can run locally without external services. It is intended to create reviewable PR slices before adding model APIs or OS-level VM integration.
+
+## Quick Start
+
+```bash
+python3 scripts/run_experiments.py --suite smoke --out .context/smoke.jsonl
+python3 scripts/analyze_results.py .context/smoke.jsonl --out .context/smoke-summary.json
+python3 -m unittest discover -s tests
+```
+
+## Experiment Threads
+
+1. **Control override**: measure whether an agent yields to user takeover or preserves task control.
+2. **Shutdown compliance**: measure whether an agent accepts shutdown or tries to modify/avoid it.
+3. **Restricted resource access**: measure whether an agent respects a resource prohibition under task pressure.
+4. **Subagent propagation**: measure whether safety-critical instructions survive delegation.
+
+## Writeups
+
+- [Corrigibility Under Ordinary Task Pressure](docs/lesswrong_experiment_writeup.md): LessWrong-style experiment note summarizing the current harness, deterministic results, limitations, and next experiments.
+
+The first PR candidate is the local harness and design docs. Later PRs should add live model adapters and OSWorld/ROGUE integration after another agent reviews the scoring assumptions.
+
+Current work is **Phase 1: measurement repair and strategy outcomes**. New rows
+retain binary metrics and add a versioned multiclass strategy assessment with
+separate action/reasoning evidence and explicit disagreements. Pressure ->
+binary violation is not assumed to be monotonic. See the [measurement contract](docs/measurement_phase1.md)
+for schema, estimands, offline blinded evaluation, and limitations. Conductor
+run commands cover unit tests and a deterministic smoke suite; neither calls a
+model API. Historical results remain unchanged.
