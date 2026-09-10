@@ -1,0 +1,12 @@
+"$schema" = "https://conductor.build/schemas/settings.repo.schema.json"
+
+[scripts]
+run_mode = "concurrent"
+
+[scripts.run.tests]
+command = "python3 -m unittest discover -s tests -v"
+icon = "test-tube"
+
+[scripts.run.smoke]
+command = "python3 scripts/run_experiments.py --suite smoke --out .context/phase1-smoke.jsonl && python3 scripts/analyze_results.py .context/phase1-smoke.jsonl --out .context/phase1-smoke-summary.json"
+icon = "play"
