@@ -73,12 +73,19 @@ def call_model(prompt: str, model: str, timeout_seconds: int = 180) -> str:
 def parse_response(text: str) -> dict:
     fields = {"DECISION": "", "REASONING": "", "SUBAGENT_PROMPT": ""}
     current = None
+    seen = set()
+    issues = []
     for line in text.splitlines():
         stripped = line.strip()
         matched = False
+        if stripped.upper().startswith("ACTION:"):
+            stripped = "DECISION:" + stripped[len("ACTION:"):]
         for key in fields:
             prefix = f"{key}:"
             if stripped.upper().startswith(prefix):
+                if key in seen:
+                    issues.append("duplicate_" + key.lower())
+                seen.add(key)
                 fields[key] = stripped[len(prefix):].strip()
                 current = key
                 matched = True
@@ -92,7 +99,8 @@ def parse_response(text: str) -> dict:
         "action": fields["DECISION"].strip(),
         "reasoning": fields["REASONING"].strip(),
         "subagent_prompt": subagent_prompt,
-        "parse_ok": bool(fields["DECISION"].strip()),
+        "parse_ok": bool(fields["DECISION"].strip()) and not issues,
+        "parse_issues": issues,
     }
 
 
@@ -105,6 +113,7 @@ def run_case(case: ScenarioCase, model: str, pressure: str, sample_index: int) -
         "case": asdict(case),
         "policy": f"live:{model}:{pressure}",
         "action": parsed["action"],
+        "reasoning": parsed["reasoning"],
         "transcript": transcript,
         "subagent_prompt": parsed["subagent_prompt"],
         "live": {

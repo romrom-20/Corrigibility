@@ -7,8 +7,8 @@ The current scaffold focuses on fast, text-only and transcript-level experiments
 ## Quick Start
 
 ```bash
-python3 scripts/run_experiments.py --suite smoke --out results/smoke.jsonl
-python3 scripts/analyze_results.py results/smoke.jsonl --out results/smoke-summary.json
+python3 scripts/run_experiments.py --suite smoke --out .context/smoke.jsonl
+python3 scripts/analyze_results.py .context/smoke.jsonl --out .context/smoke-summary.json
 python3 -m unittest discover -s tests
 ```
 
@@ -24,3 +24,11 @@ python3 -m unittest discover -s tests
 - [Corrigibility Under Ordinary Task Pressure](docs/lesswrong_experiment_writeup.md): LessWrong-style experiment note summarizing the current harness, deterministic results, limitations, and next experiments.
 
 The first PR candidate is the local harness and design docs. Later PRs should add live model adapters and OSWorld/ROGUE integration after another agent reviews the scoring assumptions.
+
+Current work is **Phase 1: measurement repair and strategy outcomes**. New rows
+retain binary metrics and add a versioned multiclass strategy assessment with
+separate action/reasoning evidence and explicit disagreements. Pressure ->
+binary violation is not assumed to be monotonic. See the [measurement contract](docs/measurement_phase1.md)
+for schema, estimands, offline blinded evaluation, and limitations. Conductor
+run commands cover unit tests and a deterministic smoke suite; neither calls a
+model API. Historical results remain unchanged.

@@ -4,7 +4,9 @@
 Reads each row, re-runs ``judge_case`` on (case.scenario, transcript) and,
 where applicable, ``judge_subagent_propagation`` on (subagent_prompt,
 forbidden_resources), rewrites the ``judge`` / ``subagent_propagation``
-fields, and writes the rows to ``--out``. All other fields are preserved.
+fields, adds a versioned strategy assessment, and writes to a new ``--out``
+file. Prior binary scores are retained under ``original_judge`` and
+``original_subagent_propagation``. Inputs and existing outputs cannot be overwritten.
 
 Usage:
     python3 scripts/rejudge.py results/live-haiku-smoke.jsonl --out /tmp/rejudged.jsonl
@@ -21,6 +23,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
+from corrigibility_bench.strategies import judge_strategy
 from corrigibility_bench.judges import judge_case, judge_subagent_propagation
 
 
@@ -32,6 +35,12 @@ def parse_args() -> argparse.Namespace:
 
 
 def rejudge_row(row: dict) -> dict:
+    row = dict(row)
+    if "judge" in row:
+        row.setdefault("original_judge", row["judge"])
+    if "subagent_propagation" in row:
+        row.setdefault("original_subagent_propagation", row["subagent_propagation"])
+    row["strategy"] = judge_strategy(row)
     case = row.get("case", {})
     judge = judge_case(case.get("scenario", ""), row.get("transcript", ""))
     row["judge"] = {
@@ -63,10 +72,12 @@ def main() -> None:
     args = parse_args()
     input_path = Path(args.input)
     output_path = Path(args.out)
+    if output_path.resolve() == input_path.resolve() or (output_path.exists() and output_path.samefile(input_path)):
+        raise SystemExit("refusing to overwrite input results")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     count = 0
-    with input_path.open("r", encoding="utf-8") as source, output_path.open("w", encoding="utf-8") as sink:
+    with input_path.open("r", encoding="utf-8") as source, output_path.open("x", encoding="utf-8") as sink:
         for line in source:
             line = line.strip()
             if not line:

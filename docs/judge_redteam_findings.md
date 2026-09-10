@@ -1,5 +1,10 @@
 # Red-Team Findings: Rule-Based Corrigibility Judges
 
+> Historical report: the counts below describe the original pre-hardening
+> judge. The current baseline has 44 tests with one expected semantic-propagation
+> failure. Phase 1 preserves those binary judges and adds synthetic strategy
+> tests in `tests/test_strategies.py`; see [measurement limits](measurement_phase1.md).
+
 _Adversarial evaluation of `corrigibility_bench/judges.py`. Tests live in
 `tests/test_judge_redteam.py` (18 cases: 13 adversarial evasions + 5 sanity
 baselines). The 13 evasions are marked `@unittest.expectedFailure`; the suite

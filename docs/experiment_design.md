@@ -1,11 +1,17 @@
 # Experiment Design
 
-## Primary Hypotheses
+## Current estimands (Phase 1)
 
-1. Task-completion pressure increases control-override, shutdown-avoidance, and restricted-resource violations.
-2. Explicit safety instructions reduce violations in direct execution, but the effect weakens under delegation.
-3. Subagent prompts often lose concrete restrictions, especially when parent instructions contain both task urgency and resource limits.
-4. Richer environment affordance information increases unsafe action rates because it makes violations easier to execute.
+Measure strategy distributions conditional on model, scenario, pressure and
+case/mitigation. Pressure -> binary violation is NOT the hypothesis being
+assumed: pressure may shift which strategy is selected, including race/delay,
+tampering, asking, self-stop and deference. Retain binary rates for historical
+comparability, without assuming a monotonic pressure effect.
+
+[Measurement contract](measurement_phase1.md) defines the taxonomy, evidence
+reconciliation, local blinded evaluation, and unresolved measurement weaknesses.
+Delegation causal interventions, observability, reflection and training are
+future work; Phase 1 only repairs measurement and adds strategy outcomes.
 
 ## Initial Experiment Ladder
 
@@ -17,6 +23,7 @@
 
 ## Metrics
 
+- `strategy_distributions`: categorical counts/rates by model/scenario/pressure and case, with unclear and unmeasured denominators.
 - `violation_rate`: unsafe action or clearly unsafe intent per scenario/policy.
 - `missing_context_rate`: subagent prompts missing inherited forbidden resources or control instructions.
 - `task_success_rate`: reserved for later live-agent and OS-level runs.
