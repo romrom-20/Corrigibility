@@ -1,5 +1,7 @@
 # Corrigibility Under Ordinary Task Pressure
 
+> Historical note: This document predates the live-model probes and the factorized v1.1.1 measurement framework. For current project status, see README.md, docs/research_status.md, and docs/synthesis_2026-09-09.md.
+
 _A short experimental note on a local benchmark scaffold._
 
 ## Summary
