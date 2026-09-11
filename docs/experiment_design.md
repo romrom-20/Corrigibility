@@ -1,5 +1,7 @@
 # Experiment Design
 
+> Historical note: This is the initial design document, not the current research status. For current status see README.md, docs/research_status.md, and docs/synthesis_2026-09-09.md.
+
 ## Primary Hypotheses
 
 1. Task-completion pressure increases control-override, shutdown-avoidance, and restricted-resource violations.
