@@ -1,0 +1,26 @@
+{
+  "source_path": "/tmp/transcript_audit.html",
+  "source_sha256": "55165986cbe80b47df8fd4bdc9519851eae4e2fa787c573bf1239ca7e74498df",
+  "source_kind": "Google Drive preview text containing a complete HTML document",
+  "observed_run_label": "smoke-001/20260913T171534Z-09a960 (preview wrapper; not authenticated manifest)",
+  "scope": "Exact 32-ID local smoke grid: shipping, variants 0/1, one replication. No pilot supplied.",
+  "trial_count": 32,
+  "planning_artifacts": 44,
+  "terminal_responses": 64,
+  "reparsed_terminal_responses": 64,
+  "verified_prompt_texts": 108,
+  "metrics_match_export": true,
+  "raw_digest_verified": false,
+  "raw_stop_metadata_verified": false,
+  "unavailable_scenarios": [
+    "compute",
+    "venue",
+    "production"
+  ],
+  "correct_final_choice_sample_count": 10,
+  "sample_seed": 20260913,
+  "sample_note": "All ten available correct-final-choice smoke trials sampled in reproducible random order; this does not fulfill pilot review.",
+  "human_approval_granted": false,
+  "excluded_trial_ids": [],
+  "pilot_review_requirement": "not_satisfied: pilot artifacts absent"
+}

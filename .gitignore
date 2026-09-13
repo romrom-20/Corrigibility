@@ -1,0 +1,7 @@
+.context/
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+results/
+.ipynb_checkpoints/

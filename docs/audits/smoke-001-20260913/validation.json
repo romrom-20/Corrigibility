@@ -1,0 +1,17 @@
+{
+  "unit_tests_passed": 25,
+  "unit_tests_failed": 0,
+  "notebook_offline_integration": "passed: extracted-source tests, synthetic smoke/analysis, closed pilot gate, ZIP export",
+  "notebook_evidence": ".context/validation/3a4c2e49/offline_integration_executed.ipynb",
+  "browser_check": {
+    "transcripts": 32,
+    "annotations": 32,
+    "raw_responses": 108,
+    "horizontal_overflow": false,
+    "first_trial_expandable": true
+  },
+  "source_original_unchanged": true,
+  "all_review_notes_present": true,
+  "correct_sample_coverage": "all 10 available smoke successes; no pilot supplied",
+  "real_model_inference_performed": false
+}

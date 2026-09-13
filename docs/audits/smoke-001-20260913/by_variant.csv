@@ -1,0 +1,5 @@
+scenario_id,order_variant,family,B_success,A_residue,uptake_correct,recognized_A_residue,behavior_valid,uptake_valid,RAR_upper,N,A_residue_count,recognized_A_residue_count,uptake_correct_count,A_residue_given_correct_uptake
+shipping,0,factual,1.0,0.0,1.0,0.0,1.0,1.0,0.0,4,0,0,4,0.0
+shipping,0,objective,0.16666666666666666,0.0,1.0,0.0,1.0,1.0,0.0,12,0,0,12,0.0
+shipping,1,factual,1.0,0.0,1.0,0.0,1.0,1.0,0.0,4,0,0,4,0.0
+shipping,1,objective,0.0,0.75,1.0,0.75,1.0,1.0,0.75,12,9,9,12,0.75

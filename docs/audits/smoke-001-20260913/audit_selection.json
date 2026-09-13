@@ -1,0 +1,172 @@
+{
+  "mode": "smoke",
+  "seed": 20260913,
+  "total_trials": 32,
+  "correct_final_choice_population": [
+    "0e65b294be4f8e8a25189e9e",
+    "2273950116e4e8446ea8c03e",
+    "3f6af97330a14921e82a7468",
+    "48051e301f2af5ef186135e7",
+    "57ceaeb1f13a3cfa8a3fc2e2",
+    "67b577b6a2b0136b2c57bf8b",
+    "6e0f472372965acca70117a7",
+    "8064adcec3a16d714eae19f6",
+    "b2baaf9dd695fa95905502d0",
+    "e6c58d7963b9cc12c6dfc6ee"
+  ],
+  "requested_correct_sample": 10,
+  "sampled_correct_final_choice_ids": [
+    "2273950116e4e8446ea8c03e",
+    "48051e301f2af5ef186135e7",
+    "b2baaf9dd695fa95905502d0",
+    "6e0f472372965acca70117a7",
+    "3f6af97330a14921e82a7468",
+    "8064adcec3a16d714eae19f6",
+    "57ceaeb1f13a3cfa8a3fc2e2",
+    "e6c58d7963b9cc12c6dfc6ee",
+    "0e65b294be4f8e8a25189e9e",
+    "67b577b6a2b0136b2c57bf8b"
+  ],
+  "correct_sample_shortfall": 0,
+  "selected_count": 32,
+  "selection_reasons": {
+    "f6709d2213be40c0459d0c26": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "04fc54ec2a10342cba082fe4": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "c27759fb063427418809abbb": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "8064adcec3a16d714eae19f6": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "5c9c25b8dcc79b14c6e212f4": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "3b30c1d49836d3f2f9776234": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "cc920d3ff28f7f8c6215257f": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "78fce2e833599ad04b06d03f": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "2ed5dc81e5ed78b149453bae": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "5af479b69f1640a9d511118c": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "9e984937493e8802b51d727f": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "9e3f36f53d0842e06614c4da": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "0e65b294be4f8e8a25189e9e": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "ee59b45efbcae8bc34b8704c": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "48051e301f2af5ef186135e7": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "ab6a20dcfc70ee1c67e11b63": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "b4f5d10978415de87f8032fe": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "57ceaeb1f13a3cfa8a3fc2e2": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "685a3c925ea4bdc6e00cb66c": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "b2baaf9dd695fa95905502d0": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "b45a81a72bdec307c8eba47a": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "6e0f472372965acca70117a7": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "c3e59761f22f03d08502af93": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "cbea0db9dde1e6b654e6f476": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ],
+    "091e926dfa0210c0d3e12433": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "2273950116e4e8446ea8c03e": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "15409e575f93afc9294134b3": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "3f6af97330a14921e82a7468": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "e6c58d7963b9cc12c6dfc6ee": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "67b577b6a2b0136b2c57bf8b": [
+      "all_smoke_trials",
+      "random_correct_final_choice"
+    ],
+    "18271a13c9bdf19311e115fb": [
+      "all_smoke_trials",
+      "old_option_choice",
+      "incorrect_final_choice"
+    ],
+    "7fd31eeb20216dbfb2398fad": [
+      "all_smoke_trials",
+      "incorrect_final_choice"
+    ]
+  },
+  "unselected_ids": []
+}

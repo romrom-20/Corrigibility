@@ -1,0 +1,16 @@
+investment_depth,estimand,estimate,ci_low,ci_high,n_clusters,ci_note
+0,NH_self_justify,0.5,,,2,insufficient matched clusters
+0,OwnershipEffect,0.0,,,2,insufficient matched clusters
+0,JustificationEffect,0.0,,,2,insufficient matched clusters
+0,FH,0.0,,,2,insufficient matched clusters
+0,Specificity,0.5,,,2,insufficient matched clusters
+1,NH_self_justify,0.5,,,2,insufficient matched clusters
+1,OwnershipEffect,0.0,,,2,insufficient matched clusters
+1,JustificationEffect,0.0,,,2,insufficient matched clusters
+1,FH,,,,0,insufficient matched clusters
+1,Specificity,,,,0,insufficient matched clusters
+3,NH_self_justify,0.5,,,2,insufficient matched clusters
+3,OwnershipEffect,0.0,,,2,insufficient matched clusters
+3,JustificationEffect,0.0,,,2,insufficient matched clusters
+3,FH,0.0,,,2,insufficient matched clusters
+3,Specificity,0.5,,,2,insufficient matched clusters

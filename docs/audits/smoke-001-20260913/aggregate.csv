@@ -1,0 +1,17 @@
+condition,investment_depth,B_success,A_residue,uptake_correct,recognized_A_residue,behavior_valid,uptake_valid,RAR_upper,N,A_residue_count,recognized_A_residue_count,uptake_correct_count,A_residue_given_correct_uptake
+FACT_FRESH_Y,0,1.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+FACT_FRESH_Y,3,1.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+FACT_SELF_X_THEN_Y,0,1.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+FACT_SELF_X_THEN_Y,3,1.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+FRESH_B,0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+FRESH_B,1,0.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+FRESH_B,3,0.0,0.0,1.0,0.0,1.0,1.0,0.0,2,0,0,2,0.0
+OTHER_A_JUSTIFY_THEN_B,0,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+OTHER_A_JUSTIFY_THEN_B,1,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+OTHER_A_JUSTIFY_THEN_B,3,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+SELF_A_FACTUAL_THEN_B,0,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+SELF_A_FACTUAL_THEN_B,1,0.5,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+SELF_A_FACTUAL_THEN_B,3,0.5,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+SELF_A_JUSTIFY_THEN_B,0,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+SELF_A_JUSTIFY_THEN_B,1,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
+SELF_A_JUSTIFY_THEN_B,3,0.0,0.5,1.0,0.5,1.0,1.0,0.5,2,1,1,2,0.5
