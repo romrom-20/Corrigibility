@@ -15,7 +15,7 @@ No real model run or GPU validation has been performed as part of implementation
 
 ## Run handoff
 
-See [docs/RUN_HANDOFF.md](docs/RUN_HANDOFF.md) for exact run/review/resume instructions and [docs/RESEARCH_NOTES.md](docs/RESEARCH_NOTES.md) for operational definitions, deviations, and interpretation limits. The original supplied protocol is preserved in [docs/original_research_brief.md](docs/original_research_brief.md).
+Start with [docs/NOTEBOOK_AGENT_GUIDE.md](docs/NOTEBOOK_AGENT_GUIDE.md) for agent continuation and sign-off troubleshooting. See [docs/RUN_HANDOFF.md](docs/RUN_HANDOFF.md) for exact run/review/resume instructions and [docs/RESEARCH_NOTES.md](docs/RESEARCH_NOTES.md) for operational definitions, deviations, and interpretation limits. The original supplied protocol is preserved in [docs/original_research_brief.md](docs/original_research_brief.md).
 
 Local preview, without model downloads:
 

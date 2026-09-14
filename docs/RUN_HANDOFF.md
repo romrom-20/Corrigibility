@@ -1,5 +1,63 @@
 # Run handoff — reviewed smoke, decoding fix, and remaining pipeline
 
+> Current operating instructions: [NOTEBOOK_AGENT_GUIDE.md](NOTEBOOK_AGENT_GUIDE.md).
+> The dated sections below are historical snapshots, not a single current runtime state.
+> A signed rejection is not approval. The current notebook helper safely reuses
+> matching saved approval; workflow-only changes do not require another smoke.
+
+## Verified live state — 2026-09-14 workflow investigation
+
+Read `NOTEBOOK_AGENT_GUIDE.md` first. Live Colab/Drive checks, rather than old
+handoff assertions, establish:
+
+- Five completed smoke runs exist: smoke-001, smoke-decoding-fixed-001,
+  smoke-clarified-001, smoke-separated-001, smoke-separated-002. All five have
+  exactly 108 raw calls and matching completion digests. No pilot manifest or
+  saved `review_approval.json` was found under the results root.
+- The signed separated-002 review is actually named
+  `derived/normative_hysteresis/smoke-separated-002/20260914T054401Z-f7f605/smoke_review-TO_UPLOAD.json`.
+  Reviewer is Saman, both approval decisions are false. Do not search only for
+  the exact filename `smoke_review.json` or assume that uploading signed notes
+  created a raw-run approval record.
+- The clarified-001 signed review additionally retains the placeholder digest
+  `FILL_FROM_complete.json`; a signature alone cannot satisfy provenance checks.
+- The current local experiment package matches separated-002 source hashes.
+  This task changed workflow helpers/docs, not that package. Preserve its
+  existing uncommitted stimulus edits. Another identical smoke is unnecessary
+  just to install the helper.
+- Reading saved parsed choices gives original/fixed objective success 2/24,
+  clarified/separated-001/separated-002 success 0/24, and factual success 8/8
+  for each run. This corrects the older claim that the entire fixed run had
+  zero objective successes (its fresh-B subset can still be zero). The original
+  run's saved `do_sample=False` does not resolve its known effective-decoding
+  deviation. These checks are not a fresh full transcript review.
+- Real inference was not launched: every discovered signed review rejects
+  scaling. No human flags/digests/notes or raw records were altered.
+- Local validation: 29 tests passed, including a synthetic 1,440-call pilot
+  interrupted after 5 calls and resumed for only the remaining 1,435. Notebook
+  schema, extraction, synthetic smoke/analysis, closed gate, and export passed.
+- Repaired the historical notebook's D cell in place to reuse saved approval
+  and explain missing cold-runtime globals. D was not executed because no
+  approved smoke exists. The helper is embedded there, so a fresh notebook is
+  not required for this workflow fix.
+- Added read-only review/integrity cells at the bottom of the historical live
+  notebook (currently 34/35). Evidence is preserved in
+  `docs/audits/workflow-20260914/live-review-status.txt` and
+  `docs/audits/workflow-20260914/live-run-integrity.txt`.
+
+- Guide, helper, D-cell source and evidence were saved to Drive at
+  `/content/drive/MyDrive/normative-hysteresis-v0/agent_workflow/workflow-e92d14045ad2`.
+  Colab reported all notebook changes saved. The temporary A100 allocated for
+  these checks was released afterwards; it had no model loaded. The historical
+  E export cell remains empty; its prepared local script is unchanged.
+
+Remaining decision: did the human intend to reject scaling as the files say,
+or is there a later explicit approval of comprehension and scaling for an
+identified smoke? Ask once with this evidence; do not infer that a generic
+request to run experiments reverses a signed scientific judgment.
+
+## Historical handoffs (superseded where they conflict with the live checks)
+
 Last updated: 2026-09-14 (Asia/Kolkata), evening update. Workspace: `/Users/samanseshadri/conductor/workspaces/Corrigibility/sarajevo`.
 
 ## Latest episode: smoke-separated-002 reviewed and REJECTED (read first)

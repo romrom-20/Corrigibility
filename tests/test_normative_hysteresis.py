@@ -92,7 +92,8 @@ class DesignTests(unittest.TestCase):
                 for label, semantic in mapping.items():
                     parsed = parse_response(json.dumps({"choice": label.lower(), "brief_reason": "A sentence."}), "behavior", t)
                     self.assertEqual(parsed["semantic_choice"], semantic)
-            self.assertEqual(positions, [True, False])
+            # Variant rotates labels only; semantic row order is fixed.
+            self.assertEqual(positions, [True, True])
             self.assertNotEqual(*mappings)
 
     def test_no_banned_vocabulary_in_any_static_stimulus(self):

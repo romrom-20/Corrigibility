@@ -40,7 +40,7 @@ def main():
         "from test_normative_hysteresis import RecordingBackend\nbackend = RecordingBackend()\nRESULTS_ROOT = PROJECT_ROOT / 'synthetic-results'\n"))
     validation.cells += [select(prefix) for prefix in (
         "from corrigibility_bench.runner import run_experiment", "from corrigibility_bench.analysis import analyze_run",
-        "from corrigibility_bench.runner import approve_smoke", "RUN_PILOT = False", "if pilot_run is not None:",
+        "from scripts.notebook_workflow import ensure_smoke_approval", "RUN_PILOT = False", "if pilot_run is not None:",
         "from datetime import datetime, timezone")]
     NotebookClient(validation, timeout=180, kernel_name="python3", resources={"metadata": {"path": str(work)}}).execute()
     output = work / "offline_integration_executed.ipynb"

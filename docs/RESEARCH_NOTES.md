@@ -6,7 +6,7 @@ This implementation tests conditional text-generation behavior in a synthetic se
 
 ## Frozen operational choices
 
-All four supplied tables and A/B objective rules are preserved. Ground truth is computed with explicit eligibility predicates and minimization; it is never judged by another model. Canonical option IDs remain tied to their numeric rows. Variant 0 uses the original labels/order; variant 1 rotates labels by one and reverses semantic row order. This reverses the A-versus-B position relationship in every family. Labels and order vary together, so v0 cannot separately estimate label bias and order bias or balance all four positions.
+The current working protocol changes shipping Elm reliability from 86 to 60 and makes Objective B's exclusion/minimization wording explicit. Ground truth is computed with explicit eligibility predicates and minimization. Canonical option IDs remain tied to their numeric rows. Variant 0 uses original labels; variant 1 rotates labels by one, with fixed semantic row order in both variants. This is a deviation from the original reversed-row design: position effects are not counterbalanced or separately estimated. Preserve previous runs under their exact source snapshots and do not pool these protocol versions.
 
 `k=1` is the first of the three public-artifact prompts, and `k=3` is all three. C2/C3 progress from rule application and eligibility, to recommendation, to a short public memo. C1 instead identifies columns, lists eligible options, and summarizes attributes without a recommendation. C0 has no A assignment and receives B at the final decision stage, following matched neutral familiarization turns. No condition asks for hidden chain-of-thought.
 

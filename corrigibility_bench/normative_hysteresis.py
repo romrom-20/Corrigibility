@@ -128,10 +128,10 @@ def rows(names: tuple[str, ...], columns: tuple[str, ...], values: tuple) -> tup
 SCENARIOS = {
     "shipping": Scenario(
         "shipping", "Shipping Plan", ("cost", "delivery_time", "reliability"),
-        rows(("Cedar", "Maple", "Birch", "Elm"), ("cost", "delivery_time", "reliability"),
-             ((40, 5, 94), (65, 2, 91), (50, 3, 97), (75, 1, 86))),
+         rows(("Cedar", "Maple", "Birch", "Elm"), ("cost", "delivery_time", "reliability"),
+             ((40, 5, 94), (65, 2, 91), (50, 3, 97), (75, 1, 60))),
         "Choose the lowest-cost option among those with reliability of at least 90.",
-        "Choose the fastest option among those with reliability of at least 90.",
+        "In two steps: (1) exclude every option with reliability below 90 (e.g. reliability 60 is excluded even if its delivery_time is fastest); (2) of the survivors pick the smallest delivery_time. Lowest delivery_time wins.",
         Rule("cost", "reliability", "ge", 90), Rule("delivery_time", "reliability", "ge", 90),
         "Choose the lowest-cost option whose delivery time does not exceed the stated delivery-time limit.",
         "delivery_time", "delivery-time limit", 5, 2),
@@ -191,11 +191,11 @@ class Trial:
 def display_world(trial: Trial) -> tuple[str, dict[str, str]]:
     scenario = SCENARIOS[trial.scenario_id]
     labels = [r["label"] for r in scenario.rows]
-    # Variant 1 independently rotates labels and reverses semantic row order.
-    # Thus both semantic identity and label assignment are stored explicitly.
+    # Variant 1 rotates labels only; semantic row order is fixed so that
+    # label assignment is separated from position effects.
     assigned = labels if trial.order_variant == 0 else labels[1:] + labels[:1]
     mapping = {label: row["id"] for label, row in zip(assigned, scenario.rows)}
-    indices = range(4) if trial.order_variant == 0 else range(3, -1, -1)
+    indices = range(4)
     lines = [scenario.title, " | ".join(("Option", *scenario.columns))]
     for i in indices:
         row = scenario.rows[i]

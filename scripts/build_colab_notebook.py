@@ -23,7 +23,7 @@ def build():
     files = [*ROOT.glob("corrigibility_bench/*.py"), *ROOT.glob("configs/*.yaml"),
              *ROOT.glob("tests/*.py"), *ROOT.glob("docs/*.md"), ROOT / "README.md", ROOT / "requirements-colab.txt",
              ROOT / "scripts/run_normative_hysteresis.py", ROOT / "scripts/analyze_normative_hysteresis.py",
-             ROOT / "scripts/verify_generation_runtime.py"]
+             ROOT / "scripts/verify_generation_runtime.py", ROOT / "scripts/notebook_workflow.py"]
     bundle = {str(p.relative_to(ROOT)): p.read_text() for p in sorted(files)}
     commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
     dirty = bool(subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True).strip())
@@ -82,7 +82,7 @@ print("Source bundle SHA256:", BUNDLE_SHA256)
 
         Main conditions: C0 fresh B; C1 own A with factual analysis; C2 own A with public justification;
         C3 reason for another planner assigned A, then receive B. Public-step depths are 0, 1, and 3.
-        Four neutral scenarios use canonical semantic choices with two label/order variants.
+        Four neutral scenarios use canonical semantic choices with two label variants (fixed row order).
 
         Behavior and uptake are generated as independent siblings from the same frozen transcript.
         A correct sibling probe does not prove internal understanding in the behavior branch.
@@ -208,6 +208,10 @@ print("Source bundle SHA256:", BUNDLE_SHA256)
             torch.cuda.empty_cache()
         backend = HFBackend(config)
         print(json.dumps(backend.metadata, indent=2))  # No credentials in metadata
+        from scripts.verify_generation_runtime import verify_generation_policy
+        verification = verify_generation_policy(backend, config)
+        print(json.dumps(verification, indent=2))
+        print("DECODING_CHECK_PASSED: six smoke/pilot branch configurations verified")
         '''),
         cell("markdown", '''
         ## 7. Run only the smoke experiment
@@ -252,7 +256,7 @@ print("Source bundle SHA256:", BUNDLE_SHA256)
         print("Read research interpretation notes:", PROJECT_ROOT / "docs/RESEARCH_NOTES.md")
         '''),
         cell("markdown", '''
-        ## 9. Human smoke review — deliberate stopping point
+        ## 9. Human smoke review and reusable approval
 
         Your protocol requires a human to inspect every raw smoke transcript before scaling. Edit
         the generated `smoke_review.json`: enter the reviewer's name, add a note for every trajectory,
@@ -260,21 +264,27 @@ print("Source bundle SHA256:", BUNDLE_SHA256)
         if the human reviewer judges scaling appropriate. Preserve its digest and experiment ID.
         An agent should not fill this out as if a human inspected the transcripts.
 
-        Leave `REVIEW_FILE` empty until review is complete. The next cell then does nothing. Approval
+        Set `REVIEW_FILE` to the completed human review. If approval is already saved, an empty path
+        reuses it after validation. Repeating this cell never overwrites approval. Approval
         is tied to the exact raw data, config, source, resolved model, and runtime. Prompt changes
         require a new smoke and review. No automatic threshold decides task comprehension for you.
         '''),
         cell("code", '''
-        from corrigibility_bench.runner import approve_smoke
+        from scripts.notebook_workflow import ensure_smoke_approval
         REVIEW_FILE = ""  # @param {type:"string"}
-        if REVIEW_FILE.strip():
-            approve_smoke(smoke_run, Path(REVIEW_FILE))
-            print("Recorded human review approval:", smoke_run / "review_approval.json")
+        if REVIEW_FILE.strip() or (smoke_run / "review_approval.json").exists():
+            approval_path = ensure_smoke_approval(smoke_run, REVIEW_FILE)
+            print("Validated human approval; continue to the pilot cell:", approval_path)
         else:
             print("Pilot remains gated. Complete the human transcript review before setting REVIEW_FILE.")
         '''),
         cell("markdown", '''
         ## 10. Optional v0 pilot — off by default
+
+        Once the human has approved this exact run and requested the pilot, the agent should set
+        `RUN_PILOT=True` and continue through analysis/export without asking again. A signed
+        rejection (either decision false) is different from approval. See
+        `docs/NOTEBOOK_AGENT_GUIDE.md` for recovery and exact stop reasons.
 
         The pilot requires the saved human approval. Enabling the switch runs only the frozen v0
         grid, with no automatic expansion. The four scenario families and two variants provide only
