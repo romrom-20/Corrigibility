@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+"""Execute the portable readiness path with an explicitly invalid synthetic backend."""
+import ast
+import copy
+from pathlib import Path
+import uuid
+import zipfile
+import nbformat
+from nbclient import NotebookClient
+
+ROOT=Path(__file__).resolve().parents[1]
+source=nbformat.read(ROOT/'notebooks/normative_hysteresis_objective_replication_colab.ipynb',as_version=4)
+nbformat.validate(source)
+for cell in source.cells:
+    if cell.cell_type=='code':
+        ast.parse(cell.source)
+        assert not cell.outputs and cell.execution_count is None
+
+def select(prefix):
+    matches=[c for c in source.cells if c.cell_type=='code' and c.source.startswith(prefix)]
+    assert len(matches)==1,prefix
+    return copy.deepcopy(matches[0])
+
+work=ROOT/'.context/validation'/('objective-replication-'+uuid.uuid4().hex[:8]);work.mkdir(parents=True)
+nb=nbformat.v4.new_notebook(metadata=copy.deepcopy(source.metadata))
+nb.cells=[nbformat.v4.new_markdown_cell('# SYNTHETIC SOFTWARE VALIDATION ONLY\nNo model loaded; deliberately invalid responses remain in every denominator.'),
+          select('from pathlib import Path'),select('import unittest'),
+          nbformat.v4.new_code_cell("from test_replication import FakeBackend\nbackend=FakeBackend()\nRESULTS_ROOT=PROJECT_ROOT/'synthetic-results'"),
+          select("RUN_ID ="),select("RUN_ID ="),select('derived ='),select('import zipfile, uuid'),
+          nbformat.v4.new_code_cell("assert backend.calls==1536\nassert cal.read_json(run_dir/'complete.json')['calls']==1536\nassert cal.read_json(run_dir/'complete.json')['raw_digest']==cal.raw_digest(run_dir)\nsummary=cal.read_json(derived/'summary.json')\nassert sum(c['N'] for c in summary['cells'])==512\nassert sum(c['B_success_count'] for c in summary['cells'])==0")]
+for i,c in enumerate(nb.cells):c.id=f'validation-{i}'
+NotebookClient(nb,timeout=120,kernel_name='python3',resources={'metadata':{'path':str(work)}}).execute()
+evidence=work/'executed.ipynb';nbformat.write(nb,evidence)
+extracted=work/('nh-objective-replication-src-'+source.metadata.source_bundle_sha256[:12])
+for name in ['objective_replication.py','configs/objective_replication_v1.json','replication_tests/test_replication.py']:
+    assert (ROOT/name).read_bytes()==(extracted/name).read_bytes()
+archives=list(extracted.glob('synthetic-results/exports/*.zip'));assert len(archives)==1
+with zipfile.ZipFile(archives[0]) as z:
+    assert z.testzip() is None
+    assert len([n for n in z.namelist() if '/records/' in n])==1536
+    assert 'source/objective_replication.py' in z.namelist()
+    assert any(n.endswith('/design_audit.json') for n in z.namelist())
+print('PASS: portable sources, offline tests, 1536 saved synthetic failures, completed resume without generation, analysis and export.')
+print('Evidence:',evidence)
