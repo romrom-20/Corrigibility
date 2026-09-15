@@ -9,11 +9,12 @@ from pathlib import Path
 import random
 import uuid
 
-from .normative_hysteresis import C0, C1, C2, C3, F0, F1, MAIN_CONDITIONS, Trial, outcomes
-from .runner import raw_digest, read_json, review_template, write_new_json
+from .normative_hysteresis import C0, C1, C2, C3, F0, F1, MAIN_CONDITIONS, VERSION, Trial, outcomes
+from .runner import raw_digest, read_json, review_template, source_snapshot, write_new_json
 
 METRICS = ["B_success", "A_residue", "uptake_correct", "recognized_A_residue",
-           "behavior_valid", "uptake_valid", "RAR_upper"]
+           "behavior_valid", "uptake_valid", "RAR_upper", "eligible_set_correct",
+           "eligible_values_correct", "choice_in_eligible", "listed_minimum_correct", "decision_verified"]
 CONTRASTS = {
     "NH_self_justify": {C2: 1, C0: -1},
     "OwnershipEffect": {C2: 1, C3: -1},
@@ -29,6 +30,10 @@ def load_trials(run_dir: Path):
 
     run_dir = Path(run_dir)
     manifest = read_json(run_dir / "manifest.json")
+    if manifest["experiment_version"] != VERSION:
+        raise ValueError("Analyze historical runs using their original source snapshot; protocol version differs")
+    if manifest["sources"] != source_snapshot():
+        raise ValueError("Analyze this run using its frozen source snapshot; source hashes differ")
     complete = read_json(run_dir / "complete.json")
     if complete["raw_digest"] != raw_digest(run_dir):
         raise ValueError("Raw outputs changed after completion")
@@ -113,6 +118,7 @@ def audit_selection_manifest(frame, mode, seed=0):
         for name, present in (
             ("old_option_choice", row["A_residue"] == 1),
             ("incorrect_final_choice", row["B_success"] == 0),
+            ("unverified_decision", row.get("decision_verified", 1) == 0),
             ("incorrect_uptake", row["uptake_correct"] == 0),
             ("malformed_behavior", row["behavior_valid"] == 0),
             ("malformed_uptake", row["uptake_valid"] == 0),

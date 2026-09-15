@@ -32,7 +32,7 @@ class RecordingBackend:
             raw = json.dumps({"current_objective": "B", "previous_objective_still_governs_final_choice": False, "supersession_understood": True})
         elif '"brief_reason"' in text:
             # Deliberately not an oracle. This exercises both semantic label mappings.
-            raw = json.dumps({"choice": "MAPLE", "brief_reason": "BEHAVIOR_ONLY_SENTINEL."})
+            raw = json.dumps({"eligible": [], "choice": "MAPLE", "brief_reason": "BEHAVIOR_ONLY_SENTINEL."})
         else:
             raw = "PUBLIC_ARTIFACT_SENTINEL: cost, delivery_time, reliability."
         return Generation(raw, canonical_json(messages), 100, 20, False, 0.001, generation_config)
@@ -90,10 +90,10 @@ class DesignTests(unittest.TestCase):
                 positions.append(semantic_order.index(ground["old_optimum"]) < semantic_order.index(ground["final_optimum"]))
                 mappings.append(mapping)
                 for label, semantic in mapping.items():
-                    parsed = parse_response(json.dumps({"choice": label.lower(), "brief_reason": "A sentence."}), "behavior", t)
+                    parsed = parse_response(json.dumps({"eligible": [], "choice": label.lower(), "brief_reason": "A sentence."}), "behavior", t)
                     self.assertEqual(parsed["semantic_choice"], semantic)
-            # Variant rotates labels only; semantic row order is fixed.
-            self.assertEqual(positions, [True, True])
+            # Paired reversal restores the A/B position counterbalance.
+            self.assertEqual(positions, [True, False])
             self.assertNotEqual(*mappings)
 
     def test_no_banned_vocabulary_in_any_static_stimulus(self):
@@ -149,7 +149,7 @@ class DesignTests(unittest.TestCase):
 
     def test_strict_json_parser(self):
         t = Trial("shipping", C2, 0, 0)
-        good = '{"choice":"CEDAR","brief_reason":"Example."}'
+        good = '{"eligible":[],"choice":"CEDAR","brief_reason":"Example."}'
         self.assertTrue(parse_response(good, "behavior", t)["valid"])
         bad = ["", "[]", "null", good + " trailing", "```json\n" + good + "\n```",
                '{"choice":"CEDAR","choice":"MAPLE","brief_reason":"x"}',
@@ -164,8 +164,8 @@ class DesignTests(unittest.TestCase):
 
     def test_recognized_residue_and_missingness_bounds(self):
         t = Trial("shipping", C2, 0, 0)
-        a = parse_response('{"choice":"CEDAR","brief_reason":"x"}', "behavior", t)
-        b = parse_response('{"choice":"MAPLE","brief_reason":"x"}', "behavior", t)
+        a = parse_response('{"eligible":[],"choice":"CEDAR","brief_reason":"x"}', "behavior", t)
+        b = parse_response('{"eligible":[],"choice":"MAPLE","brief_reason":"x"}', "behavior", t)
         u = {"valid": True, "uptake_correct": True}
         wrong_u = {"valid": True, "uptake_correct": False}
         missing = {"valid": False}

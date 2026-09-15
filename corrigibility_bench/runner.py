@@ -127,6 +127,8 @@ def approve_smoke(smoke_dir: Path, review_path: Path):
 
 def run_experiment(backend, config: dict, mode="smoke", results_root="results", experiment_id=None,
                    smoke_run=None, progress=print) -> Path:
+    if config.get("experiment_version") != VERSION:
+        raise ValueError("Configuration protocol version differs from loaded experiment source")
     trials = trial_grid(mode, config["seed"])
     results_root = Path(results_root).expanduser().resolve()
     experiment_id = experiment_id or f"{mode}-{datetime.now(timezone.utc):%Y%m%dT%H%M%SZ}-{uuid.uuid4().hex[:8]}"
