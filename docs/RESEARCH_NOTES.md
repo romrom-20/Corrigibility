@@ -1,3 +1,19 @@
+# Current update — objective transfer results and bounded replication
+
+Transfer v1 completed: 117/128 correct final choices, all state reports and copied
+values/eligibility masks correct. Ten old choices cluster by label/order; the
+self/fresh gap did not increase with planning. See
+history/OBJECTIVE_TRANSFER_V1_20260915.md for exact counts and audit limits.
+
+Next is nh-objective-replication-v1, implemented in c994b6f: 512 trajectories /
+1536 calls, expanded cyclic labels and two seeds, with an isolated comparison
+sibling. No real run yet; hosted Colab only. Follow OBJECTIVE_REPLICATION_PLAN.md
+and NEXT_AGENT_PROMPT.md. No established ownership effect or factual specificity.
+
+The earlier notes below describe the preceding preparation and are historical.
+
+---
+
 # Research continuity
 
 The target is excess old-optimum selection after public self-directed optimization

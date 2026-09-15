@@ -22,9 +22,15 @@ credible baseline competence are needed before such a claim; null results count.
 5. Readiness v1: nh-readiness-v1, 192 fresh-only calls. Constructed error
    traps, independent label/order crossing, full versus relevant-column views,
    and current-state extraction. Completed: focused A/B 15/16 and 16/16 fully verified, factual X/Y each 5/16. See history/READINESS_V1_20260915.md.
-6. Current preparation: nh-objective-transfer-v1, 128 trajectories / 320 calls,
-   objective-only transition feasibility at k=0/1. No real run yet. The factual
-   specificity question remains unresolved. See OBJECTIVE_TRANSFER_PLAN.md.
+6. Objective transfer v1 completed 128 trajectories / 320 calls: 117/128 B
+   choices, 128/128 state and mask/copy correctness. Ten old choices clustered
+   by row order/label; self/fresh gap did not grow with planning. See
+   history/OBJECTIVE_TRANSFER_V1_20260915.md. Implementation: 99adf52.
+7. Current preparation: nh-objective-replication-v1, implementing commit c994b6f.
+   512 trajectories / 1536 calls across all four cyclic label rotations and two
+   seed replicates, with a separately scored explicit-comparison sibling at depth
+   one. No real model run yet. See OBJECTIVE_REPLICATION_PLAN.md. Factual
+   specificity remains unresolved.
 
 Keep every historical notebook/export and its frozen source. Old approval and old
 scores remain attached to old runs; do not pool versions or reinterpret historical

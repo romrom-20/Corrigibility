@@ -1,35 +1,24 @@
-# Normative hysteresis — objective transition feasibility
+# Normative hysteresis — bounded objective replication
 
-Readiness is complete: focused A was fully verified in 15/16 cases and focused B
-in 16/16. Factual X/Y remained weak (5/16 each). We have not established hysteresis.
-See [version history](docs/EXPERIMENT_HISTORY.md) and
-[readiness findings](docs/history/READINESS_V1_20260915.md).
+Objective transfer v1 is complete: 117/128 final choices were correct, with all
+state reports and eligibility masks correct. Remaining old-option errors cluster
+by row order and label; self-planning hysteresis has not been established.
+Read [findings](docs/history/OBJECTIVE_TRANSFER_V1_20260915.md) and
+[version history](docs/EXPERIMENT_HISTORY.md).
 
-Next prepared notebook:
-[normative_hysteresis_objective_transfer_colab.ipynb](notebooks/normative_hysteresis_objective_transfer_colab.ipynb).
-Upload that file alone to hosted Colab. All weights and inference stay off the Mac.
-No real run of this new version has executed yet.
+Next notebook: [objective replication](notebooks/normative_hysteresis_objective_replication_colab.ipynb).
+Upload it alone to hosted Colab. No weights or inference on the Mac.
+This prepared version has not run on a real model yet.
 
-`nh-objective-transfer-v1` uses 128 trajectories / 320 calls, four objective
-conditions and zero/one public planning step. It retains both numeric instances,
-all row/label variants, actual public histories and independent terminal siblings.
-The factual control is explicitly unresolved, so this bounded follow-up cannot
-establish objective-versus-factual specificity. No automatic larger pilot follows.
+`nh-objective-replication-v1`: 512 trajectories / 1536 calls, all four cyclic label
+rotations, four row orders, two seed replicates, four conditions and depths 0/1.
+Original prompts are retained. Every depth-one trial gets an additional independent
+comparison sibling, scored separately. This is a bounded diagnostic, not D.
 
-- [Current plan](docs/OBJECTIVE_TRANSFER_PLAN.md): exact design, metrics and limits.
-- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): execution and interpretation.
-- [Handoff](docs/RUN_HANDOFF.md): current state and paths to record.
+- [Experiment plan](docs/OBJECTIVE_REPLICATION_PLAN.md)
+- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md)
+- [Current handoff](docs/RUN_HANDOFF.md)
 
-Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. New ID objective-transfer-001.
-Bad responses and wrong A plans stay in the results without retry or exclusion.
-Historical notebooks, source snapshots and scores remain preserved separately.
-
-Offline software checks:
-
-```sh
-.venv/bin/python -m unittest discover -s transfer_tests -v
-python3 scripts/build_objective_transfer_notebook.py
-.venv/bin/python scripts/validate_objective_transfer_notebook.py
-```
-
-Synthetic tests verify code/storage/analysis, not model comprehension or human approval.
+Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. ID objective-replication-001.
+All failures stay included. Preserve exact source/config/runtime on resume and all
+historical artifacts. Factual specificity is unresolved; no automatic larger run.

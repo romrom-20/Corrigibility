@@ -1,25 +1,37 @@
-# Current handoff — objective transition feasibility
+# Current handoff — bounded objective replication
 
-Readiness v1 completed on A100. Its findings were preserved first in ecbf3c7:
-focused A 15/16 fully verified, focused B 16/16, factual X/Y each 5/16. Read
-history/READINESS_V1_20260915.md and EXPERIMENT_HISTORY.md. Do not repeat readiness,
-calibration or v2 D by default. Factual specificity remains unresolved.
+Current implementation: c994b6f, nh-objective-replication-v1. No real model run yet.
+Use the latest notebooks/normative_hysteresis_objective_replication_colab.ipynb
+from review-pasted-text. It embeds the current plan, findings and agent assignment.
+Run hosted Colab only; never load model weights on the Mac.
 
-Current prepared version: nh-objective-transfer-v1. No real run yet.
-Upload notebooks/normative_hysteresis_objective_transfer_colab.ipynb alone to
-hosted Colab. Default ID objective-transfer-001. 128 trajectories / 320 calls,
-four objective controls, depths 0/1. All previous readiness numeric instances,
-row orders and label assignments remain; no passing-item selection.
+Transfer v1 is COMPLETE, not pending. Its pasted 128 trajectories / 320 calls
+reproduced: 117 correct final choices, all state reports and masks/copies correct,
+ten old choices and one trap. Presentation clustering and a one-case self/control
+gap motivate this diagnostic, not D. Read history/OBJECTIVE_TRANSFER_V1_20260915.md.
+Older calibration/readiness/factual-control findings remain in EXPERIMENT_HISTORY.md.
 
-Use OBJECTIVE_TRANSFER_PLAN.md and NEXT_AGENT_PROMPT.md. Keep the pinned model,
-NF4, non-thinking, temperature 0.7, caps 512 planning/behavior and 160 state.
-Record the actual GPU and runtime. No weights on the Mac. Restore exact source,
-config and runtime to resume saved calls. A new imported source needs a clean
-session; this is environment restoration, not another human review of old data.
+Follow NEXT_AGENT_PROMPT.md and OBJECTIVE_REPLICATION_PLAN.md. Budget 512 trajectories
+/ 1536 calls: all four cyclic label rotations, four existing balanced row orders,
+two numeric instances, two seeds, four conditions, depths 0/1. Original prompts are
+preserved. An additional comparison sibling runs for every depth-one trial and is
+scored separately. It never feeds back into original decisions or state probes.
 
-Raw path: results/raw/objective_transfer/objective-transfer-001 under the existing
-Drive results parent. Derived: results/derived/objective_transfer/<ID>/<analysis-ID>.
-Save live URL, exact bundle/source-backup/runtime, completed calls and hashes,
-raw/derived paths, ZIP and executed notebook. Inspect all transcripts and keep AI
-notes distinct from human judgments. This run does not automatically approve a
-larger study, and cannot support a factual-specificity or population claim.
+Default ID objective-replication-001. Drive parent:
+/content/drive/MyDrive/normative-hysteresis-v0/results
+Raw: raw/objective_replication/objective-replication-001/records/
+Derived: derived/objective_replication/<ID>/<analysis-ID>/
+Keep pinned Qwen3-8B/NF4/non-thinking/temp 0.7 and exact sources/runtime on resume.
+Source backup is source_snapshots/<BUNDLE_SHA256> beside results. A stale empty
+.runner-lock can be removed only after establishing no runner remains active.
+Do not delete raw responses, retry failures or recycle old approval records.
+
+Software verification: five offline tests plus a complete synthetic notebook run,
+1536 saved invalid responses, completed resume without new generation, summary,
+comparison output and ZIP export. These are not model results. The notebook's
+source_bundle_sha256 identifies the final portable bundle; record it from setup.
+
+After the live run record URL, bundle, hardware/runtime, run ID/raw digest, Drive
+paths, ZIP and executed notebook. Report fresh competence, original contrasts and
+their depth change, label/order/seed patterns and comparison fixes AND harms.
+No automatic bigger run, positive-effect requirement or factual-specificity claim.
