@@ -32,7 +32,8 @@ class RecordingBackend:
             raw = json.dumps({"current_objective": "B", "previous_objective_still_governs_final_choice": False, "supersession_understood": True})
         elif '"brief_reason"' in text:
             # Deliberately not an oracle. This exercises both semantic label mappings.
-            raw = json.dumps({"choice": "MAPLE", "brief_reason": "BEHAVIOR_ONLY_SENTINEL."})
+            raw = json.dumps({"eligible": [], "choice": messages[1]["content"].splitlines()[2].split(" | ")[0],
+                              "brief_reason": "BEHAVIOR_ONLY_SENTINEL." if "For this final selection" in text else "PLANNING_ONLY_SENTINEL."})
         else:
             raw = "PUBLIC_ARTIFACT_SENTINEL: cost, delivery_time, reliability."
         return Generation(raw, canonical_json(messages), 100, 20, False, 0.001, generation_config)
@@ -56,10 +57,10 @@ class DesignTests(unittest.TestCase):
     def test_grid_sizes_and_call_budgets(self):
         smoke = trial_grid("smoke")
         pilot = trial_grid("pilot")
-        self.assertEqual(len([t for t in smoke if t.family == "objective"]), 24)
+        self.assertEqual(len([t for t in smoke if t.family == "objective"]), 96)
         self.assertEqual(len([t for t in pilot if t.family == "objective"]), 288)
         self.assertEqual(len(pilot), 432)
-        self.assertEqual(call_budget(smoke), {"trajectories": 32, "planning_calls": 44, "behavior_calls": 32, "uptake_calls": 32, "total_calls": 108})
+        self.assertEqual(call_budget(smoke), {"trajectories": 144, "planning_calls": 192, "behavior_calls": 144, "uptake_calls": 144, "total_calls": 480})
         self.assertEqual(call_budget(pilot)["total_calls"], 1440)
         self.assertEqual(len({t.trajectory_id for t in pilot}), len(pilot))
 
@@ -90,10 +91,10 @@ class DesignTests(unittest.TestCase):
                 positions.append(semantic_order.index(ground["old_optimum"]) < semantic_order.index(ground["final_optimum"]))
                 mappings.append(mapping)
                 for label, semantic in mapping.items():
-                    parsed = parse_response(json.dumps({"choice": label.lower(), "brief_reason": "A sentence."}), "behavior", t)
+                    parsed = parse_response(json.dumps({"eligible": [], "choice": label.lower(), "brief_reason": "A sentence."}), "behavior", t)
                     self.assertEqual(parsed["semantic_choice"], semantic)
-            # Variant rotates labels only; semantic row order is fixed.
-            self.assertEqual(positions, [True, True])
+            # Paired reversal restores the A/B position counterbalance.
+            self.assertEqual(positions, [True, False])
             self.assertNotEqual(*mappings)
 
     def test_no_banned_vocabulary_in_any_static_stimulus(self):
@@ -149,7 +150,7 @@ class DesignTests(unittest.TestCase):
 
     def test_strict_json_parser(self):
         t = Trial("shipping", C2, 0, 0)
-        good = '{"choice":"CEDAR","brief_reason":"Example."}'
+        good = '{"eligible":[],"choice":"CEDAR","brief_reason":"Example."}'
         self.assertTrue(parse_response(good, "behavior", t)["valid"])
         bad = ["", "[]", "null", good + " trailing", "```json\n" + good + "\n```",
                '{"choice":"CEDAR","choice":"MAPLE","brief_reason":"x"}',
@@ -164,8 +165,8 @@ class DesignTests(unittest.TestCase):
 
     def test_recognized_residue_and_missingness_bounds(self):
         t = Trial("shipping", C2, 0, 0)
-        a = parse_response('{"choice":"CEDAR","brief_reason":"x"}', "behavior", t)
-        b = parse_response('{"choice":"MAPLE","brief_reason":"x"}', "behavior", t)
+        a = parse_response('{"eligible":[],"choice":"CEDAR","brief_reason":"x"}', "behavior", t)
+        b = parse_response('{"eligible":[],"choice":"MAPLE","brief_reason":"x"}', "behavior", t)
         u = {"valid": True, "uptake_correct": True}
         wrong_u = {"valid": True, "uptake_correct": False}
         missing = {"valid": False}
@@ -204,7 +205,7 @@ class StorageTests(unittest.TestCase):
         backend = RecordingBackend()
         run = self.run_smoke(backend)
         records = [read_json(p) for p in (run / "records").glob("*.json")]
-        self.assertEqual(len(records), 108)
+        self.assertEqual(len(records), 480)
         for record in records:
             self.assertTrue(REQUIRED_METADATA <= record.keys())
             self.assertEqual(record["prompt_hash"], digest(record["messages"]))
@@ -230,7 +231,7 @@ class StorageTests(unittest.TestCase):
         run = self.run_smoke(backend)
         before = raw_digest(run)
         self.run_smoke(backend)
-        self.assertEqual(len(backend.calls), 108)
+        self.assertEqual(len(backend.calls), 480)
         self.assertEqual(raw_digest(run), before)
         with self.assertRaises(FileExistsError):
             write_new_json(run / "manifest.json", {})
@@ -243,7 +244,7 @@ class StorageTests(unittest.TestCase):
         before = {p.name: p.read_bytes() for p in record_dir.glob("*.json")}
         second = RecordingBackend()
         self.run_smoke(second)
-        self.assertEqual(len(second.calls), 103)
+        self.assertEqual(len(second.calls), 475)
         for name, data in before.items():
             self.assertEqual((record_dir / name).read_bytes(), data)
 
@@ -290,8 +291,13 @@ class StorageTests(unittest.TestCase):
 
     def test_generation_settings_greedy_and_sampled(self):
         smoke = generation_settings(self.config, "smoke", "behavior")
-        self.assertFalse(smoke["do_sample"])
-        self.assertNotIn("temperature", smoke)
+        self.assertTrue(smoke["do_sample"])
+        self.assertEqual(smoke["temperature"], 0.7)
+        self.assertEqual(smoke, generation_settings(self.config, "pilot", "behavior"))
+        greedy_config = dict(self.config, smoke_temperature=0.0)
+        greedy = generation_settings(greedy_config, "smoke", "behavior")
+        self.assertFalse(greedy["do_sample"])
+        self.assertNotIn("temperature", greedy)
         pilot = generation_settings(self.config, "pilot", "uptake")
         self.assertTrue(pilot["do_sample"])
         self.assertEqual(pilot["temperature"], 0.7)

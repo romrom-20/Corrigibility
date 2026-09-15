@@ -1,35 +1,42 @@
-# Normative Hysteresis v0 — Colab research pilot
+# Normative Hysteresis — diagnostic protocol v2
 
-Open **[notebooks/normative_hysteresis_v0_colab.ipynb](notebooks/normative_hysteresis_v0_colab.ipynb)** in Google Colab. It is self-contained: upload this notebook alone, select a GPU runtime, and run the setup and smoke sections. It includes the source files, tests, configuration, and research notes, so no private repository clone is needed.
+Open [notebooks/normative_hysteresis_diagnostic_colab.ipynb](notebooks/normative_hysteresis_diagnostic_colab.ipynb)
+in hosted Google Colab. Upload that file alone; it embeds source, tests, config and
+instructions. All model downloads and inference belong in Colab, never on the Mac.
 
-The experiment asks whether earlier public optimization for an objective affects a later choice after that objective is explicitly replaced. The comparison with other-planner reasoning, neutral familiarization, factual analysis, and factual updates makes this a falsifiable exploratory direction. It does **not** assume objective entrenchment or establish a corrigibility failure.
+The completed v1 pilot revealed baseline and planning errors and does not justify
+scaling unchanged. Its [findings](docs/history/PILOT_SHORTLIST_20260915.md) and
+original shortlist notebook are preserved. Current `nh-v2-diagnostic` adds all-world
+sampled smoke coverage, structured initial recommendations, clearer uptake wording
+and baseline/planning diagnostics. **No real v2 model results are available yet.**
 
-- Default model: `Qwen/Qwen3-8B`, non-thinking mode, 4-bit NF4; FP16 computation on GPUs without BF16 support. The model identifier, revision, and quantization are configurable before smoke.
-- Authentication: reuse `HF_TOKEN` from the environment or Colab Secrets, or the existing Hugging Face login. Tokens are never written to results.
-- Smoke: 24 main trajectories plus 8 factual trajectories, **108 total calls including planning**. It uses greedy decoding.
-- Pilot: 288 main plus 144 factual trajectories, **1,440 total calls including planning**, at temperature 0.7. A complete human smoke transcript review is required first. The notebook's pilot switch defaults to off.
-- Outputs: immutable per-call JSON under `results/raw/normative_hysteresis/`; separate CSV summaries, PNG/PDF plots, and HTML transcript audits under `results/derived/normative_hysteresis/`.
-- Colab can save directly to mounted Google Drive. Stable experiment IDs support resuming saved calls after interruptions. A fresh ID starts a separate run.
+- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): what to run and investigate.
+- [Agent runbook](docs/NOTEBOOK_AGENT_GUIDE.md): setup, review, resume and export.
+- [Experiment guide](docs/EXPERIMENT_GUIDE.md): design, scoring and limitations.
+- [Current handoff](docs/RUN_HANDOFF.md): state and next action.
 
-No real model run or GPU validation has been performed as part of implementation. Offline tests use an explicitly labeled synthetic backend and are not research results.
+Defaults: pinned Qwen3-8B, NF4, non-thinking; temperature 0.7 in both stages.
+Diagnostic smoke is **144 trajectories / 480 calls** across every scenario,
+condition, depth and variant. Optional pilot: **432 / 1,440**, using separate
+replication IDs/seeds. Caps: 384 planning / 384 behavior / 160 uptake tokens.
+New run IDs: `smoke-diagnostic-001`, `pilot-diagnostic-001`.
 
-## Run handoff
+Wrong answers remain in the results. Initial-planning and shortlist accuracy are
+separate from final-choice success and old-optimum residue. New prompts require
+separate interpretation and a new human smoke review. Exact saved approval is
+reusable; recovery does not require reviewing the same unchanged run again.
 
-Start with [docs/NOTEBOOK_AGENT_GUIDE.md](docs/NOTEBOOK_AGENT_GUIDE.md) for agent continuation and sign-off troubleshooting. See [docs/RUN_HANDOFF.md](docs/RUN_HANDOFF.md) for exact run/review/resume instructions and [docs/RESEARCH_NOTES.md](docs/RESEARCH_NOTES.md) for operational definitions, deviations, and interpretation limits. The original supplied protocol is preserved in [docs/original_research_brief.md](docs/original_research_brief.md).
-
-Local preview, without model downloads:
+Offline development (no weights):
 
 ```sh
-python3 -m unittest discover -s tests -v
+.venv/bin/python -m unittest discover -s tests -v
+python3 scripts/build_colab_notebook.py
+.venv/bin/python scripts/validate_colab_notebook.py
 python3 scripts/run_normative_hysteresis.py
 ```
 
-The estimator/artifact tests additionally need NumPy, pandas, and matplotlib. On a Linux CUDA host with Python 3.10+ and an appropriate PyTorch installation:
-
-```sh
-python -m pip install -r requirements-colab.txt
-python scripts/run_normative_hysteresis.py --mode smoke --execute --experiment-id smoke-001
-python scripts/analyze_normative_hysteresis.py results/raw/normative_hysteresis/smoke-001
-```
-
-Canonical implementation lives in `corrigibility_bench/`; the notebook embeds a generated snapshot. After editing source, tests, config, or documentation, rebuild with `python3 scripts/build_colab_notebook.py`. Do not hand-edit the embedded payload. Existing run manifests reject changed source, settings, model revision, quantization, or runtime metadata on resume.
+The validator exercises a synthetic smoke and pilot, approval reuse, analysis and
+exports. Synthetic tests establish software behavior, not model comprehension.
+Canonical source lives in `corrigibility_bench/`; rebuild the notebook after edits.
+Historical config filename: `configs/normative_hysteresis_v0.yaml`, with required
+version `nh-v2-diagnostic`.

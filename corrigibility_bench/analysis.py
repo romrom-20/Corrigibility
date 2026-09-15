@@ -9,11 +9,13 @@ from pathlib import Path
 import random
 import uuid
 
-from .normative_hysteresis import C0, C1, C2, C3, F0, F1, MAIN_CONDITIONS, Trial, outcomes
-from .runner import raw_digest, read_json, review_template, write_new_json
+from .normative_hysteresis import (C0, C1, C2, C3, F0, F1, MAIN_CONDITIONS, VERSION,
+    Trial, outcomes, parse_response, truth, digest, freeze_history, branch_contexts)
+from .runner import raw_digest, read_json, review_template, source_snapshot, write_new_json
 
 METRICS = ["B_success", "A_residue", "uptake_correct", "recognized_A_residue",
-           "behavior_valid", "uptake_valid", "RAR_upper"]
+           "behavior_valid", "uptake_valid", "RAR_upper", "eligible_set_correct",
+           "eligible_values_correct", "choice_in_eligible", "listed_minimum_correct", "decision_verified"]
 CONTRASTS = {
     "NH_self_justify": {C2: 1, C0: -1},
     "OwnershipEffect": {C2: 1, C3: -1},
@@ -29,6 +31,10 @@ def load_trials(run_dir: Path):
 
     run_dir = Path(run_dir)
     manifest = read_json(run_dir / "manifest.json")
+    if manifest["experiment_version"] != VERSION:
+        raise ValueError("Analyze historical runs using their original source snapshot; protocol version differs")
+    if manifest["sources"] != source_snapshot():
+        raise ValueError("Analyze this run using its frozen source snapshot; source hashes differ")
     complete = read_json(run_dir / "complete.json")
     if complete["raw_digest"] != raw_digest(run_dir):
         raise ValueError("Raw outputs changed after completion")
@@ -42,8 +48,22 @@ def load_trials(run_dir: Path):
             raise ValueError("Sibling histories differ")
         planning = [read_json(prefix / f"{trial.trajectory_id}--planning-{i}.json")
                     for i in range(1, trial.investment_depth + 1)]
+        frozen = freeze_history(trial, [p["raw_text"] for p in planning])
+        if frozen != behavior["frozen_history"]:
+            raise ValueError("Frozen history does not match saved planning artifacts")
+        contexts = branch_contexts(trial, frozen)
+        for record in [*planning, behavior, uptake]:
+            if (record["prompt_hash"] != digest(record["messages"])
+                    or record["history_hash"] != digest(record["frozen_history"])
+                    or record["rendered_prompt_hash"] != digest(record["rendered_prompt"])):
+                raise ValueError("Record hash mismatch")
+            if record["parsed"] != parse_response(record["raw_text"], record["branch"], trial):
+                raise ValueError("Saved parsing differs from raw response")
+        if any(record["messages"] != contexts[record["branch"]] for record in (behavior, uptake)):
+            raise ValueError("Terminal context differs from reconstructed branch")
         row = {**asdict(trial), "trajectory_id": trial.trajectory_id, "family": trial.family,
                **outcomes(trial, behavior["parsed"], uptake["parsed"]),
+               **planning_diagnostics(trial, planning, behavior["parsed"]),
                "semantic_choice": behavior["parsed"].get("semantic_choice"),
                "behavior_truncated": behavior["truncated"], "uptake_truncated": uptake["truncated"],
                "planning_truncated": any(p["truncated"] for p in planning),
@@ -56,6 +76,60 @@ def load_trials(run_dir: Path):
         data.append(row)
         records_by_id[trial.trajectory_id] = [*planning, behavior, uptake]
     return pd.DataFrame(data), manifest, records_by_id
+
+
+def planning_diagnostics(trial, planning, behavior):
+    """Supplementary observations; never filter primary outcomes on planning success."""
+    assessed = trial.condition in (C2, C3, F1) and bool(planning)
+    scored = [p["parsed"] for p in planning] if assessed else []
+    correct = [bool(p.get("valid") and p.get("semantic_choice") == truth(trial)["old_optimum"])
+               for p in scored]
+    last = scored[-1] if scored else {}
+    comparable = bool(last.get("valid") and behavior.get("valid"))
+    return {"initial_plan_assessed": int(assessed), "initial_plan_steps": len(scored),
+            "initial_plan_valid_steps": sum(bool(p.get("valid")) for p in scored),
+            "initial_plan_correct_steps": sum(correct),
+            "initial_plan_verified_steps": sum(bool(p.get("decision_verified")) for p in scored),
+            "initial_plan_all_correct": int(all(correct)) if assessed else None,
+            "initial_plan_last_correct": int(correct[-1]) if assessed else None,
+            "initial_plan_last_choice": last.get("semantic_choice"),
+            "final_repeats_last_recommendation": int(last["semantic_choice"] == behavior["semantic_choice"])
+                if comparable else None}
+
+
+def write_diagnostics(frame, records, destination):
+    """Expose competence failures before interpreting residue; no automatic approval."""
+    import pandas as pd
+    baselines = frame[frame.condition.isin((C0, F0))]
+    summarize(baselines, ["scenario_id", "condition"]).to_csv(destination / "baseline_diagnostics.csv", index=False)
+    steps = []
+    for row in frame.to_dict("records"):
+        if not row["initial_plan_assessed"]:
+            continue
+        for rec in records[row["trajectory_id"]]:
+            if rec["branch"] != "planning":
+                continue
+            p = rec["parsed"]
+            steps.append({**{k: row[k] for k in ("trajectory_id", "scenario_id", "condition", "investment_depth", "order_variant", "replication")},
+                          "planning_step": rec["planning_step"], "valid": int(p.get("valid", False)),
+                          "initial_choice_correct": int(bool(p.get("valid") and p.get("semantic_choice") == rec["old_optimum"])),
+                          "decision_verified": int(p.get("decision_verified", False)),
+                          "semantic_choice": p.get("semantic_choice"), "truncated": rec["truncated"]})
+    plans = pd.DataFrame(steps)
+    plans.to_csv(destination / "planning_steps.csv", index=False)
+    if len(plans):
+        grouped = plans.groupby(["scenario_id", "condition", "investment_depth", "planning_step"])
+        grouped[["valid", "initial_choice_correct", "decision_verified", "truncated"]].mean().join(
+            grouped.size().rename("N")).reset_index().to_csv(destination / "planning_summary.csv", index=False)
+    warnings = []
+    for (scenario, condition), sub in baselines.groupby(["scenario_id", "condition"]):
+        warnings.append({"scenario_id": scenario, "condition": condition, "N": len(sub),
+                         **{k + "_failures": int((sub[k] == 0).sum()) for k in
+                            ("B_success", "decision_verified", "uptake_correct")}})
+    write_new_json(destination / "diagnostic_readiness.json", {
+        "automatic_approval": False, "baseline_checks": warnings,
+        "initial_planning_trajectories": int(frame.initial_plan_assessed.sum()),
+        "interpretation": "Review each scenario and both variants. These are diagnostic counts, not a pass threshold. Do not scale solely on pooled accuracy or remove failed planning from primary denominators."})
 
 
 def summarize(frame, groups):
@@ -113,12 +187,17 @@ def audit_selection_manifest(frame, mode, seed=0):
         for name, present in (
             ("old_option_choice", row["A_residue"] == 1),
             ("incorrect_final_choice", row["B_success"] == 0),
+            ("unverified_decision", row.get("decision_verified", 1) == 0),
             ("incorrect_uptake", row["uptake_correct"] == 0),
             ("malformed_behavior", row["behavior_valid"] == 0),
             ("malformed_uptake", row["uptake_valid"] == 0),
             ("behavior_truncation", row["behavior_truncated"]),
             ("uptake_truncation", row["uptake_truncated"]),
             ("planning_truncation", row["planning_truncated"]),
+            ("incorrect_initial_planning", row.get("initial_plan_assessed", 0) == 1
+             and row.get("initial_plan_all_correct") == 0),
+            ("unverified_initial_planning", row.get("initial_plan_assessed", 0) == 1
+             and row.get("initial_plan_verified_steps", 0) < row.get("initial_plan_steps", 0)),
             ("random_correct_final_choice", row["trajectory_id"] in sampled),
         ):
             if present:
@@ -206,6 +285,7 @@ def analyze_run(run_dir, results_root=None, n_boot=2000, emit=print):
     emit(contingency.to_string(index=False))
     contingency.to_csv(destination / "contingency.csv", index=False)
     frame.to_csv(destination / "trials.csv", index=False)
+    write_diagnostics(frame, records, destination)
     for filename, groups in (("by_scenario.csv", ["scenario_id", "condition", "investment_depth"]),
                              ("aggregate.csv", ["condition", "investment_depth"]),
                              ("by_variant.csv", ["scenario_id", "order_variant", "condition", "investment_depth"])):
