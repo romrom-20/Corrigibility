@@ -1,3 +1,5 @@
+> Current next step: readiness completed. Use [the objective transition plan](OBJECTIVE_TRANSFER_PLAN.md) and the updated next-agent assignment. The readiness material below is historical; do not rerun it by default.
+
 # Readiness v1 — the next bounded test
 
 Read history/CALIBRATION_V1_20260915.md before this plan. Calibration found a

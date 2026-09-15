@@ -19,9 +19,12 @@ credible baseline competence are needed before such a claim; null results count.
    still choose the old optimum without history and with correct filtering.
    See history/CALIBRATION_V1_20260915.md, preserved in 744ae67 before next changes.
    Calibration implementation: 795fd8b.
-5. Current preparation: nh-readiness-v1, 192 fresh-only calls. Constructed error
+5. Readiness v1: nh-readiness-v1, 192 fresh-only calls. Constructed error
    traps, independent label/order crossing, full versus relevant-column views,
-   and current-state extraction. No real readiness run yet. See READINESS_PLAN.md.
+   and current-state extraction. Completed: focused A/B 15/16 and 16/16 fully verified, factual X/Y each 5/16. See history/READINESS_V1_20260915.md.
+6. Current preparation: nh-objective-transfer-v1, 128 trajectories / 320 calls,
+   objective-only transition feasibility at k=0/1. No real run yet. The factual
+   specificity question remains unresolved. See OBJECTIVE_TRANSFER_PLAN.md.
 
 Keep every historical notebook/export and its frozen source. Old approval and old
 scores remain attached to old runs; do not pool versions or reinterpret historical

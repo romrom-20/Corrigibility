@@ -1,37 +1,35 @@
-# Normative hysteresis research — current readiness test
+# Normative hysteresis — objective transition feasibility
 
-The latest calibration improved measurement but still found old-optimum choices
-on fresh tasks with correct filtering. We have not established hysteresis.
-[Version history](docs/EXPERIMENT_HISTORY.md) preserves the research question and
-what each completed experiment taught us.
+Readiness is complete: focused A was fully verified in 15/16 cases and focused B
+in 16/16. Factual X/Y remained weak (5/16 each). We have not established hysteresis.
+See [version history](docs/EXPERIMENT_HISTORY.md) and
+[readiness findings](docs/history/READINESS_V1_20260915.md).
 
-Next: upload [normative_hysteresis_readiness_colab.ipynb](notebooks/normative_hysteresis_readiness_colab.ipynb)
-to hosted Google Colab. It is self-contained. **No model loading or inference on
-the Mac.** Prepared version: nh-readiness-v1; no real results yet.
+Next prepared notebook:
+[normative_hysteresis_objective_transfer_colab.ipynb](notebooks/normative_hysteresis_objective_transfer_colab.ipynb).
+Upload that file alone to hosted Colab. All weights and inference stay off the Mac.
+No real run of this new version has executed yet.
 
-The 192-call test uses constructed tables with separate old/new/error options,
-independently crossed labels and row positions, matched full/focused table views,
-and explicit current-state probes. Every row remains visible in both views; no
-computer-generated eligible set is supplied. This is fresh-task readiness, not
-an investment experiment or automatic larger pilot.
+`nh-objective-transfer-v1` uses 128 trajectories / 320 calls, four objective
+conditions and zero/one public planning step. It retains both numeric instances,
+all row/label variants, actual public histories and independent terminal siblings.
+The factual control is explicitly unresolved, so this bounded follow-up cannot
+establish objective-versus-factual specificity. No automatic larger pilot follows.
 
-- [Readiness plan](docs/READINESS_PLAN.md): rationale, construction, scoring and limits.
-- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): exact task to execute.
-- [Handoff](docs/RUN_HANDOFF.md): current status and paths to record.
-- [Completed calibration findings](docs/history/CALIBRATION_V1_20260915.md).
+- [Current plan](docs/OBJECTIVE_TRANSFER_PLAN.md): exact design, metrics and limits.
+- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): execution and interpretation.
+- [Handoff](docs/RUN_HANDOFF.md): current state and paths to record.
 
-Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. New ID readiness-001.
-Use the same recorded Colab model/config/runtime when resuming. Bad responses
-are saved and scored, never retried or silently excluded. Historical notebooks
-and exports remain valid only with their original frozen source and reviews.
+Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. New ID objective-transfer-001.
+Bad responses and wrong A plans stay in the results without retry or exclusion.
+Historical notebooks, source snapshots and scores remain preserved separately.
 
-Offline checks (no weights):
+Offline software checks:
 
 ```sh
-.venv/bin/python -m unittest discover -s readiness_tests -v
-python3 scripts/build_readiness_notebook.py
-.venv/bin/python scripts/validate_readiness_notebook.py
+.venv/bin/python -m unittest discover -s transfer_tests -v
+python3 scripts/build_objective_transfer_notebook.py
+.venv/bin/python scripts/validate_objective_transfer_notebook.py
 ```
 
-Synthetic validation checks storage, interrupted/completed resume, analysis and
-exports. It does not establish comprehension or approve any real model run.
+Synthetic tests verify code/storage/analysis, not model comprehension or human approval.
