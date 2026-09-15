@@ -1,38 +1,38 @@
-# Next agent assignment: diagnose before another hysteresis run
+# Next agent: fresh-task readiness before a new carryover protocol
 
-Read `history/DIAGNOSTIC_V2_20260915.md` and `CALIBRATION_PLAN.md` before acting.
-The v2 smoke completed and did not repair the core failures. Do not run v2 D.
-The current task is isolated `nh-calibration-v1`, not a new hysteresis pilot.
+Read EXPERIMENT_HISTORY.md, history/CALIBRATION_V1_20260915.md and READINESS_PLAN.md.
+The latest calibration completed. Do not repeat it or run v2 D as the default next
+step. Current prepared code is nh-readiness-v1, with no real results yet.
 
-1. Upload `notebooks/normative_hysteresis_calibration_colab.ipynb` to a new hosted
-   Colab notebook. All weights/loading/inference stay there. Preserve v1/v2 source,
-   notebooks, raw outputs and human decisions. Do not use a laptop runtime.
-2. Run extraction, tests, Drive/source backup and model loading. Keep the pinned
-   model/configuration; record the actual GPU and runtime. Use the existing HF
-   secret without printing it. If resuming, match the recorded environment.
-3. Run `calibration-001`: 272 calls. There is no prior-smoke approval gate for this
-   isolated calibration. Save every response, including errors, without retry.
-4. Analyze and inspect all responses. First compare the one-sentence shortlist
-   ablation. Then distinguish false-positive and false-negative rows, correct
-   copies with incorrect masks, and incorrect minima despite correct masks.
-   Compare ranking-only capability, acknowledging that its supplied rows are
-   filtered by the computer. Compare probe current labels, numeric limits and
-   earlier-state answers separately, especially fresh and reversed-label contexts.
-5. Use design_audit.json to distinguish true old optima from unfiltered minima.
-   Compute's true three-way separation passes, but its repeated erroneous choices
-   can still reflect filtering failure. Shipping factual fails separation and must
-   be redesigned before a future hysteresis experiment. Venue/production objective
-   tasks instead have correct B = unfiltered B minimum, hiding filtering failures
-   behind correct final labels. Review both collision flags. No nonzero effect is
-   required; do not tune tasks until residue appears.
-6. Export raw records, source, all derived files and an executed notebook. Report
-   actual completed calls, runtime, hashes/paths, error patterns and the next
-   intervention justified by the comparisons. Keep AI notes distinct from human
-   review. This calibration does not authorize or automatically start a larger run.
+1. Upload notebooks/normative_hysteresis_readiness_colab.ipynb to a new hosted Colab
+   notebook. Keep all model downloads/loads/inference off the Mac. Use existing HF
+   secrets without printing them. Record the actual GPU; keep source/config/runtime
+   fixed. Run the offline tests and mechanical item-design checks before loading.
+2. Back up embedded source to Drive and run readiness-001: 192 independent calls,
+   testing A, B, X and Y on full and focused tables with separate state probes.
+   No earlier planning is supplied, and no generated output feeds another call.
+   This bounded readiness task has no previous smoke-approval gate.
+3. Audit every response. Compare full/focused with the same rule, labels and order.
+   Separate copied-value errors, wrong eligibility masks, wrong minima, and invalid
+   responses. Distinguish the old optimum from the unfiltered-current-rule trap.
+   Old selections under A/X are correct; under B/Y they are fresh-task errors.
+4. Inspect both numeric instances and every crossed label/order combination before
+   pooled scores. Both numeric instances share one construction; do not claim many
+   independent worlds or infer significance from the 192 call count.
+5. Export raw/source/derived data, save an executed notebook, and document live URL,
+   exact bundle/runtime/config, completed counts, paths and substantive failures.
+   Keep AI notes separate from any human decision. No retries of bad responses,
+   silent exclusions, changed tables or after-the-fact rescoring of earlier runs.
+6. Recommend the next step from actual results. If a view supports credible initial
+   and final competence, prepare a separate full design preserving C0/C1/C2/C3,
+   factual controls, public histories, independent state probes and fresh baselines.
+   The final view must be matched across conditions. Do not remove earlier history
+   to make carryover disappear. A positive residue effect is never required.
+7. If competence remains poor, identify which comparison failed before proposing
+   another task/model intervention. Do not auto-run a larger pilot or silently
+   replace the pinned model/precision. Future real-data review cannot be fabricated
+   from this code preparation or software tests.
 
-If calibration is inconclusive, say which comparison is unresolved. Do not silently
-change model, precision, prompt or table mid-run. Do not merge the outcomes with
-old results, drop failing items, overwrite bad responses or change the primary
-no-retry policy. Restore missing notebook globals instead of requesting another
-review of an unchanged already-approved run. State the exact failed predicate if
-execution stops. See CALIBRATION_PLAN.md for paths and recovery details.
+Restore the exact notebook/environment after disconnects; reuse completed calls.
+Report the actual failed predicate if blocked. Do not treat restoration as an
+excuse to demand repeat human sign-off on unchanged, already-approved data.

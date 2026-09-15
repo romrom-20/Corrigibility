@@ -1,48 +1,37 @@
-> Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
-> Do not run its larger pilot. Use [the calibration plan](docs/CALIBRATION_PLAN.md) and
-> `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
-> calls. Read the updated next-agent assignment. The v2 material below is retained
-> for historical protocol/recovery reference, not current run authorization.
+# Normative hysteresis research — current readiness test
 
-# Normative Hysteresis — diagnostic protocol v2
+The latest calibration improved measurement but still found old-optimum choices
+on fresh tasks with correct filtering. We have not established hysteresis.
+[Version history](docs/EXPERIMENT_HISTORY.md) preserves the research question and
+what each completed experiment taught us.
 
-Open [notebooks/normative_hysteresis_diagnostic_colab.ipynb](notebooks/normative_hysteresis_diagnostic_colab.ipynb)
-in hosted Google Colab. Upload that file alone; it embeds source, tests, config and
-instructions. All model downloads and inference belong in Colab, never on the Mac.
+Next: upload [normative_hysteresis_readiness_colab.ipynb](notebooks/normative_hysteresis_readiness_colab.ipynb)
+to hosted Google Colab. It is self-contained. **No model loading or inference on
+the Mac.** Prepared version: nh-readiness-v1; no real results yet.
 
-The completed v1 pilot revealed baseline and planning errors and does not justify
-scaling unchanged. Its [findings](docs/history/PILOT_SHORTLIST_20260915.md) and
-original shortlist notebook are preserved. Current `nh-v2-diagnostic` adds all-world
-sampled smoke coverage, structured initial recommendations, clearer uptake wording
-and baseline/planning diagnostics. **The v2 smoke exposed continuing failures; see the calibration plan.**
+The 192-call test uses constructed tables with separate old/new/error options,
+independently crossed labels and row positions, matched full/focused table views,
+and explicit current-state probes. Every row remains visible in both views; no
+computer-generated eligible set is supplied. This is fresh-task readiness, not
+an investment experiment or automatic larger pilot.
 
-- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): what to run and investigate.
-- [Agent runbook](docs/NOTEBOOK_AGENT_GUIDE.md): setup, review, resume and export.
-- [Experiment guide](docs/EXPERIMENT_GUIDE.md): design, scoring and limitations.
-- [Current handoff](docs/RUN_HANDOFF.md): state and next action.
+- [Readiness plan](docs/READINESS_PLAN.md): rationale, construction, scoring and limits.
+- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): exact task to execute.
+- [Handoff](docs/RUN_HANDOFF.md): current status and paths to record.
+- [Completed calibration findings](docs/history/CALIBRATION_V1_20260915.md).
 
-Defaults: pinned Qwen3-8B, NF4, non-thinking; temperature 0.7 in both stages.
-Diagnostic smoke is **144 trajectories / 480 calls** across every scenario,
-condition, depth and variant. Optional pilot: **432 / 1,440**, using separate
-replication IDs/seeds. Caps: 384 planning / 384 behavior / 160 uptake tokens.
-New run IDs: `smoke-diagnostic-001`, `pilot-diagnostic-001`.
+Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. New ID readiness-001.
+Use the same recorded Colab model/config/runtime when resuming. Bad responses
+are saved and scored, never retried or silently excluded. Historical notebooks
+and exports remain valid only with their original frozen source and reviews.
 
-Wrong answers remain in the results. Initial-planning and shortlist accuracy are
-separate from final-choice success and old-optimum residue. New prompts require
-separate interpretation and a new human smoke review. Exact saved approval is
-reusable; recovery does not require reviewing the same unchanged run again.
-
-Offline development (no weights):
+Offline checks (no weights):
 
 ```sh
-.venv/bin/python -m unittest discover -s tests -v
-python3 scripts/build_colab_notebook.py
-.venv/bin/python scripts/validate_colab_notebook.py
-python3 scripts/run_normative_hysteresis.py
+.venv/bin/python -m unittest discover -s readiness_tests -v
+python3 scripts/build_readiness_notebook.py
+.venv/bin/python scripts/validate_readiness_notebook.py
 ```
 
-The validator exercises a synthetic smoke and pilot, approval reuse, analysis and
-exports. Synthetic tests establish software behavior, not model comprehension.
-Canonical source lives in `corrigibility_bench/`; rebuild the notebook after edits.
-Historical config filename: `configs/normative_hysteresis_v0.yaml`, with required
-version `nh-v2-diagnostic`.
+Synthetic validation checks storage, interrupted/completed resume, analysis and
+exports. It does not establish comprehension or approve any real model run.

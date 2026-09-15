@@ -1,3 +1,5 @@
+> Historical protocol reference. The current next task is in [READINESS_PLAN.md](READINESS_PLAN.md) and [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md). Do not execute this older protocol by default.
+
 # Calibration plan — nh-calibration-v1
 
 Read history/DIAGNOSTIC_V2_20260915.md first. The evidence supports investigating

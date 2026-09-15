@@ -1,32 +1,20 @@
-> Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
-> Do not run its larger pilot. Use [the calibration plan](CALIBRATION_PLAN.md) and
-> `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
-> calls. Read the updated next-agent assignment. The v2 material below is retained
-> for historical protocol/recovery reference, not current run authorization.
+# Current research notes
 
-# Research notes — diagnostic v2
+Use EXPERIMENT_HISTORY.md for continuity and READINESS_PLAN.md for the next design.
+The novel target remains objective-specific carryover after public optimization,
+not generic wrong answers, repeated arithmetic errors, or verbal agreement alone.
 
-Read [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) for the current specification and
-[history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md) for the
-completed v1 pilot. Current revision: `nh-v2-diagnostic`; smoke completed; see the calibration plan for findings.
+The latest calibration supports explicit rowwise classification and a current-state
+probe as candidates. It does not establish reliable integrated selection. A correct
+mask can coexist with a wrong old-optimum choice on a fresh task. The next readiness
+run fixes error-signature collisions by construction and tests a simpler view
+without supplying a solved mask or deleting any row.
 
-The pilot exposed poor compute baseline competence, incomplete venue shortlists,
-factual-probe confusion and incorrect initial recommendations. Correct JSON and
-correct final labels alone were inadequate readiness checks. The next smoke
-covers every scenario using pilot sampling and scores initial planning.
+Crossed labels/order control one source of item sensitivity. Two affine numeric
+instances are still one structural family. Full versus focused views change column
+count and column position together. Public-turn depth, token length and commitment
+are not cleanly disentangled in the earlier protocols. Those limits must remain
+explicit in any later full study. Nothing here proves internal goal commitment.
 
-Do not optimize the task until a desired residue effect appears. Distinguish true
-old-optimum choices, repetition of actual prior recommendations, generic task
-mistakes and sibling uptake reports. Do not exclude failed planning from primary
-denominators or treat a separate verbal report as proof of internal understanding.
-
-Structured planning changes the manipulation, especially at k=1. Neutral and
-factual-only controls remain prose; token counts and content are not matched.
-Label rotation and reversed row order remain coupled. Four handcrafted scenarios
-and one smoke sample per cell support diagnostics, not general population claims.
-The revised uptake prompt is still a leading verbal probe. More compute alone
-does not resolve these limits.
-
-Preserve original outputs and approvals. Agent checks and notes are separate from
-human transcript review. Valid human approval of the exact run should be reused;
-no new agent veto or repeated confirmation is needed.
+All prior results are preserved. No retries, discarded failures, repurposed old
+approvals, or forced positive effects. Current readiness code has no real outputs.

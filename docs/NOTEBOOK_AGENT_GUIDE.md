@@ -1,3 +1,5 @@
+> Historical protocol reference. The current next task is in [READINESS_PLAN.md](READINESS_PLAN.md) and [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md). Do not execute this older protocol by default.
+
 > Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
 > Do not run its larger pilot. Use [the calibration plan](CALIBRATION_PLAN.md) and
 > `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
