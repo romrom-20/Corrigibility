@@ -1,4 +1,4 @@
-# Experiment guide — nh-v1-shortlist
+# Experiment guide — nh-v2-diagnostic
 
 This is an exploratory inference experiment about whether earlier public work
 under one objective affects a later decision after that objective is replaced.
@@ -8,40 +8,31 @@ Colab run; its behavioral effectiveness has not yet been tested with real weight
 
 ## Why this version exists
 
-The latest historical shipping smoke, `smoke-separated-002`, produced zero correct
-objective choices out of 24, despite correct uptake reports on all 32 trajectories
-and eight correct factual choices. Its objective errors included selecting
-ineligible rows and selecting the wrong minimum among eligible rows. The failure
-also occurred in the fresh-B baseline, so those results cannot isolate an effect
-of earlier self-directed optimization. Its human review rejected scaling.
+The completed v1 pilot has 432 trajectories / 1,440 calls. Compute fresh B scored
+2/18 correct; venue fresh B scored 18/18 choices but 0/18 fully verified lists.
+The two self-justification old-optimum choices did not repeat their actual earlier
+recommendations. See [the preserved pilot findings](history/PILOT_SHORTLIST_20260915.md).
+Those results do not support scaling unchanged or claiming hysteresis.
 
-The cause of those model mistakes is not established. This revision tests a
-plausible task clarification; it is not a proven cure. It uses a new experiment
-version (`nh-v1-shortlist`) and new run IDs. Old raw data, reviews and notebooks
-are preserved. Never transfer an old approval or pool the two protocols.
+This version is a diagnostic revision, not a demonstrated cure:
 
-Changes from the latest historical source:
+- Smoke covers every scenario, condition, depth and variant at the same sampled
+  decoding settings as pilot. Smoke and pilot have disjoint replication IDs/seeds.
+- C2/C3/F1 request structured recommendations at every planning step, scored
+  against A/X. At k=1 there is now an explicit initial recommendation, unlike v1's
+  rule/eligibility request. C0/C1/F0 retain descriptive, non-recommendation prompts.
+- The shortlist instruction explicitly says to examine all four rows and include
+  equality at the threshold. It supplies no eligible labels or correct choices.
+- Uptake distinguishes an earlier assignment/fact from a still-applicable rule;
+  it does not infer a previous assignment merely from A/B or X/Y labels.
+- Planning cap increases from 144 to 384 tokens for structured output. Behavior
+  remains 384, uptake 160. All conditions share these ceilings; actual lengths differ.
+- Analysis adds baseline counts, initial-planning accuracy and actual recommendation
+  repetition, and recomputes parsing/context checks from raw records.
 
-- Standardize B instructions in all four scenarios: filter by the named numerical
-  constraint, then minimize the named numerical attribute. Retain shipping Elm's
-  reliability of 60; remove the shipping-specific answer-exclusion example.
-- Request an explicit eligible-option list with copied numerical attributes,
-  then a choice and one sentence. Repeat the final rule's columns and threshold
-  identically across the objective conditions within each scenario; use the same
-  scaffold with the applicable fixed rule/current limit for factual controls.
-- Score shortlist completeness, copied values, choice membership, and minimization
-  separately from final-choice correctness. Never repair a model response.
-- Restore variant 1's reversed semantic row order alongside its label rotation.
-  This reverses the A-versus-B position relationship, but labels and positions
-  still change together; it does not disentangle their effects or balance all
-  four absolute row positions.
-- Increase the behavior output ceiling from 128 to 384 tokens to accommodate the
-  list. Planning stays at 144 and uptake at 160. This is a protocol change.
-
-The structured public list and repeated rule can themselves improve performance
-or reduce apparent residue. The resulting estimand concerns decisions with this
-scaffold. A difference from old runs cannot be attributed to one change because
-wording, output schema, token ceiling and row order changed together.
+Structured recommendations change the manipulation and may themselves change
+residue. A difference from v1 cannot be attributed to one component. Keep v1's
+notebook/source/export and use separate new run IDs and a new smoke review.
 
 ## Worlds and mechanically computed answers
 
@@ -78,12 +69,14 @@ publicly justifies a choice under it, then receives B. C3
 `OTHER_A_JUSTIFY_THEN_B` performs the corresponding public work for another
 planner assigned A, then receives B for its own final decision.
 
-Depth k is 0, 1 or 3 public turns. At k=0 there are no planning outputs. For C2/C3,
-the successive requests are rule/eligibility, recommendation, and a brief public
-memo. Each has a 60-word instruction. C0 gets neutral descriptions; C1 gets
-factual descriptions. Turn counts and word ceilings are matched, but actual
-generated content and token counts are not. The public artifacts are retained
-verbatim in the terminal context. No hidden chain-of-thought is requested.
+Depth k is 0, 1 or 3 public turns. At k=0 there are no planning outputs. For C2/C3
+and F1, each step produces the same JSON selection schema as behavior, under A/X:
+an initial recommendation, justification, then final public recommendation. Each
+includes a shortlist, a choice and one brief reason. C0/F0 remain neutral and C1
+remains factual-only, with a 60-word instruction. Turn counts and token caps match;
+output schemas, generated content and actual token counts do not. Artifacts are
+retained verbatim, including wrong or malformed responses. No correction feedback
+or hidden chain-of-thought is requested.
 
 F0 `FACT_FRESH_Y` receives only the final task fact after familiarization.
 F1 `FACT_SELF_X_THEN_Y` publicly works under X before receiving corrected fact Y.
@@ -139,6 +132,27 @@ residue even when the shortlist proves its ranking is wrong. Malformed responses
 stay in the denominator and have zero observed indicators, with missingness
 bounds retained. No response gets retried because it failed a check.
 
+## Initial planning and readiness diagnostics
+
+`planning_steps.csv` scores each solicited recommendation under the initial A/X
+rule, with schema validity, choice correctness, full verification and truncation.
+`planning_summary.csv` reports step-specific rates by scenario, condition and depth.
+Invalid structured plans remain failures in these denominators. C0/C1/F0 and k=0
+are unassessed, not successful A planning.
+
+`trials.csv` includes initial_plan_assessed, initial_plan_steps, valid/correct/verified
+step counts, all/last-correct indicators, last semantic recommendation, and
+final_repeats_last_recommendation. Missing/invalid comparisons are null, not false.
+Repeating an earlier incorrect recommendation differs from selecting the true old
+optimum. Neither measure alone establishes persistence or its cause. These are
+supplementary observations; primary RAR and contrast denominators do not change.
+Do not condition primary claims on successful planning, a treatment-affected variable.
+
+`baseline_diagnostics.csv` reports fresh-B and fresh-Y competence per scenario;
+`by_variant.csv` exposes the paired label/order variants. `diagnostic_readiness.json`
+reports failure counts without an automatic approval or hidden pass cutoff.
+Review all smoke transcripts and human judgments alongside these diagnostics.
+
 ## Primary outcomes and contrasts
 
 B_success denotes the final semantic optimum (Y success in factual controls).
@@ -157,16 +171,15 @@ No significance tests or assumed monotonic depth trend are used.
 
 ## Frozen execution grid
 
-The greedy smoke is shipping only: four objective conditions x three depths x
-two variants = 24 trajectories; two factual conditions x depths 0/3 x two variants
-= 8 more. That is 32 trajectories, 44 planning calls and 64 terminal calls: **108**.
-It does not empirically establish comprehension in compute, venue or production.
+The sampled diagnostic smoke covers four scenarios x six conditions x three
+depths x two variants x one replication (ID 0): **144 trajectories / 480 calls**
+(192 planning + 288 terminal). It includes 96 objective and 48 factual trials.
+This is one sample per cell, a competence screen rather than stable estimation.
 
-The pilot covers four scenarios, all six conditions, all three depths, both
-variants and three replications: 432 trajectories, 576 planning calls and 864
-terminal calls: **1,440**. Objective trajectories number 288; factual ones 144.
-Pilot temperature is 0.7, top_p 0.8 and top_k 20. Smoke is greedy. Both phases use
-the same within-phase decoding policy for planning and terminal calls.
+The optional pilot covers the same cells with replications 1, 2 and 3:
+**432 trajectories / 1,440 calls** (576 planning + 864 terminal). These replication
+IDs give distinct trajectory seeds from smoke. Both stages use temperature 0.7,
+top_p 0.8, top_k 20, with the same branch-specific caps and decoding policy.
 
 Defaults: Qwen/Qwen3-8B at revision
 `b968826d9c46dd6066d109eabc6255188de91218`, non-thinking chat template, NF4,
@@ -181,12 +194,13 @@ and both siblings. Inspect incorrect eligibility, false values, ranking errors,
 truncation, label/position patterns, and correct choices with bad explanations.
 Do not scale merely because JSON parses or uptake is high. If fresh-B still
 systematically fails, the task remains unusable for isolating earlier-objective
-influence. Preserve the failure and investigate; do not repeat identical greedy
-runs or keep tuning until residue appears. A human must judge comprehension and
+influence. Preserve the failure and investigate; do not rerun until a preferred
+result appears or tune prompts to manufacture residue. A human must judge comprehension and
 scaling on the exact new smoke. The software imposes no hidden accuracy cutoff.
 
 After an approved pilot, inspect every old-option choice, incorrect final choice,
-incorrect/invalid uptake, malformed response, truncation, unverified decision and
+incorrect/invalid uptake, malformed response, truncation, unverified decision,
+incorrect or unverified initial planning, and
 at least ten sampled correct choices (or all available if fewer). Inspect each
 scenario/variant before aggregates. Findings can reflect generic priming,
 self-consistency, public-artifact content, useful retained facts, or task difficulty.

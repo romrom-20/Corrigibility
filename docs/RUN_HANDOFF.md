@@ -1,53 +1,39 @@
-# Next run handoff — 2026-09-15
+# Next run handoff — diagnostic v2, 2026-09-15
 
-**Ready for a new Colab smoke; no real nh-v1-shortlist run has been performed.**
-This task implements the previously proposed shortlist clarification, scoring,
-position counterbalancing, notebook recovery/export and the next-agent instructions.
-Whether these changes improve model comprehension remains to be tested.
+The v1 pilot completed. Its findings do not justify scaling unchanged. Its protocol
+and pilot lessons are preserved in commit `63e4ac9`; the original export contains
+the actual frozen run source. Read
+[history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md).
 
-Read [NOTEBOOK_AGENT_GUIDE.md](NOTEBOOK_AGENT_GUIDE.md) for execution and
-[EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) for the research question, every
-condition, controls, metrics, experimental changes and interpretation limits.
+Current source: `nh-v2-diagnostic`. No real v2 smoke or pilot has run. Previous
+human approval does not cover new prompts. This is implementation preparation,
+not evidence that model comprehension is repaired.
 
-- Upload `notebooks/normative_hysteresis_shortlist_colab.ipynb` alone to Colab.
-- Required protocol: `nh-v1-shortlist`.
-- Defaults: `smoke-shortlist-001` then, if that smoke is approved, `pilot-shortlist-001`.
-- First real run: 32 shipping trajectories / 108 calls. Pilot: 432 trajectories /
-  1,440 calls. The notebook contains implemented C, D and E sections.
-- Model: Qwen/Qwen3-8B pinned to `b968826d9c46dd6066d109eabc6255188de91218`,
-  non-thinking, NF4. Caps: planning 144, behavior 384, uptake 160.
-- Default Drive results parent remains
-  `/content/drive/MyDrive/normative-hysteresis-v0/results`.
-- Extracted source is identified by the printed bundle hash and backed up to
-  `RESULTS_ROOT.parent/source_snapshots/<BUNDLE_SHA256>` before inference.
-- Use only Colab for models/GPU work. No weights were downloaded on the laptop.
+Upload only `notebooks/normative_hysteresis_diagnostic_colab.ipynb` to Colab.
+Use `smoke-diagnostic-001`: 144 trajectories / 480 calls, every scenario,
+condition/depth/variant, replication 0, sampled temperature 0.7.
+Optional `pilot-diagnostic-001`: 432 trajectories / 1,440 calls, replications 1–3.
+First inspect the diagnostic smoke, then use the human decision on that exact run.
 
-The old live notebook at
-https://colab.research.google.com/drive/117HBfMbsEcOQUzAMeVzD13eDarLVCVs6
-is historical. Its repaired D cell is not a deployment of this revised protocol.
-Do not run its old C/D or its mixed source cells for the new experiment. The new
-notebook has not been uploaded or executed in the user's Colab during preparation.
-Record the new live URL after upload.
+Model: Qwen/Qwen3-8B at `b968826d9c46dd6066d109eabc6255188de91218`, NF4,
+non-thinking. Caps: 384 planning / 384 behavior / 160 uptake; context 4096.
+Choose the Colab GPU before smoke and retain runtime provenance through pilot.
+Do not load models or install GPU dependencies on the Mac.
 
-The latest historical smoke (`smoke-separated-002`) failed all 24 objective
-choices, passed 8 factual choices, and has a signed rejection of comprehension
-and scaling. That result motivates the revision; it does not validate or approve
-it. Its source used fixed row order, whereas this revision restores reversal.
-All old files remain intact. The detailed historical operational record is
-[history/RUN_HANDOFF_20260914.md](history/RUN_HANDOFF_20260914.md) in the repository.
-It is an archive, not current execution guidance.
+Initial recommendations now use a scoreable shortlist schema under A/X; uptake
+wording distinguishes earlier facts from the unchanged objective; the shortlist
+requires checking all rows; analysis exposes baseline and planning competence.
+These changes define a different protocol.
 
-Validation during preparation: **34 unit tests passed**. The notebook integration
-completed the synthetic smoke, repeated fixture approval, full 432-trajectory
-synthetic pilot, analysis and smoke/pilot exports. No real weights were used.
+Read [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md),
+[NOTEBOOK_AGENT_GUIDE.md](NOTEBOOK_AGENT_GUIDE.md), and
+[EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md). Validation commands are in README.
+Synthetic validation cannot approve real data.
 
-To reproduce: run the unit suite, rebuild the notebook, then execute
-`scripts/validate_colab_notebook.py`. The validator includes a synthetic full pilot,
-reused fixture approval, analysis and smoke/pilot ZIP export. Its outputs are
-explicitly synthetic and cannot be used as research results or human approval.
-
-Next agent: execute A/B/C, audit the actual smoke and prepare its correctly bound
-human review. If the exact new smoke is approved and scaling authorized, proceed
-through D, selected-transcript audit and E without a redundant permission loop.
-If comprehension still fails, preserve and export the failure and state that the
-proposed repair did not work; do not keep rerunning identical greedy smoke.
+Previous live v1 notebook:
+https://colab.research.google.com/drive/1xsm_y9YvDv51xQB-H9Rp5WZ5sXBR06aJ
+It is historical. Record a new v2 URL after upload; do not execute mixed cells.
+Drive results: `/content/drive/MyDrive/normative-hysteresis-v0/results`.
+Source backups: adjacent `source_snapshots/<BUNDLE_SHA256>` folder.
+Save actual v2 IDs, hashes, runtime metadata, review/analysis/export paths and
+executed notebook when the next agent runs it.

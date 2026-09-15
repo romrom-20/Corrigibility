@@ -1,30 +1,26 @@
-# Research notes for nh-v1-shortlist
+# Research notes — diagnostic v2
 
-[EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) is the current scientific specification:
-it explains the hypothesis, all six conditions, four worlds, independent sibling
-branches, numerical truth, output schema, diagnostics, primary contrasts and
-limitations. [NOTEBOOK_AGENT_GUIDE.md](NOTEBOOK_AGENT_GUIDE.md) is the operational
-procedure. The original supplied brief remains in `original_research_brief.md`.
+Read [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) for the current specification and
+[history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md) for the
+completed v1 pilot. Current revision: `nh-v2-diagnostic`; no real results yet.
 
-This revision adds a public shortlist and repeats the operative numerical rule.
-It also changes B wording, the behavior token ceiling, and row ordering relative
-to the last rejected smoke. These are substantive protocol changes, not just
-formatting. They may reduce task failure or residue; neither outcome is known.
-Do not pool historical runs or attribute a difference to a single changed component.
+The pilot exposed poor compute baseline competence, incomplete venue shortlists,
+factual-probe confusion and incorrect initial recommendations. Correct JSON and
+correct final labels alone were inadequate readiness checks. The next smoke
+covers every scenario using pilot sampling and scores initial planning.
 
-Final-choice correctness and attestation correctness are separate. A correct
-choice with a false shortlist still counts as B_success=1, is decision_verified=0,
-and is obligatorily audited. An incorrect choice remains observable residue if
-it is the old optimum. The parser never corrects, retries or silently excludes
-responses. The sentence in brief_reason still requires human checking.
+Do not optimize the task until a desired residue effect appears. Distinguish true
+old-optimum choices, repetition of actual prior recommendations, generic task
+mistakes and sibling uptake reports. Do not exclude failed planning from primary
+denominators or treat a separate verbal report as proof of internal understanding.
 
-Correct sibling uptake is not proof of understanding inside the behavior branch.
-Factual controls differ in difficulty and eligibility sets. Public artifacts are
-not token-matched or content-yoked. Labels and reversed row positions are paired,
-not independently manipulated. Shipping-only smoke cannot validate all pilot
-scenarios. Bootstrap intervals are descriptive with four handcrafted worlds;
-no strong population inference or mechanistic claim follows.
+Structured planning changes the manipulation, especially at k=1. Neutral and
+factual-only controls remain prose; token counts and content are not matched.
+Label rotation and reversed row order remain coupled. Four handcrafted scenarios
+and one smoke sample per cell support diagnostics, not general population claims.
+The revised uptake prompt is still a leading verbal probe. More compute alone
+does not resolve these limits.
 
-For historical notes, see `history/RESEARCH_NOTES_20260914.md` in the repository.
-Use the original frozen code to analyze old raw records; the new analyzer rejects
-other versions/source hashes to avoid silently reinterpreting historical data.
+Preserve original outputs and approvals. Agent checks and notes are separate from
+human transcript review. Valid human approval of the exact run should be reused;
+no new agent veto or repeated confirmation is needed.

@@ -186,7 +186,7 @@ def run_experiment(backend, config: dict, mode="smoke", results_root="results", 
                 return record
             generated = backend.generate(messages, seed, settings)
             raw = generated.raw_text
-            parsed = ({"valid": True, "artifact": raw} if branch == "planning" else parse_response(raw, branch, trial))
+            parsed = parse_response(raw, branch, trial)
             record = {
                 **asdict(trial), "family": trial.family, "trajectory_id": trial.trajectory_id,
                 "experiment_id": experiment_id, "experiment_version": VERSION,

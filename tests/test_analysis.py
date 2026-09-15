@@ -77,11 +77,11 @@ class AnalysisTests(unittest.TestCase):
             self.assertTrue(derived.is_relative_to(root / "derived"))
             self.assertFalse(derived.is_relative_to(run))
             self.assertEqual(raw_digest(run), fingerprint)
-            for name in ("contingency.csv", "aggregate.csv", "by_scenario.csv", "by_variant.csv", "contrasts.csv", "depth_changes.csv", "trials.csv", "curves.png", "curves.pdf", "transcript_audit.html", "smoke_review.json", "audit_selection.json"):
+            for name in ("contingency.csv", "aggregate.csv", "by_scenario.csv", "by_variant.csv", "contrasts.csv", "depth_changes.csv", "trials.csv", "curves.png", "curves.pdf", "transcript_audit.html", "smoke_review.json", "audit_selection.json", "baseline_diagnostics.csv", "planning_steps.csv", "planning_summary.csv", "diagnostic_readiness.json"):
                 self.assertTrue((derived / name).stat().st_size > 0, name)
             frame, _, _ = load_trials(run)
-            self.assertEqual(len(frame), 32)
-            self.assertEqual(frame.behavior_valid.sum(), 32)
+            self.assertEqual(len(frame), 144)
+            self.assertEqual(frame.behavior_valid.sum(), 144)
             second = analyze_run(run, n_boot=100, emit=lambda _: None)
             self.assertNotEqual(derived, second)
 

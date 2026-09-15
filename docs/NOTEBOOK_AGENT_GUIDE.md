@@ -1,4 +1,4 @@
-# Agent runbook — nh-v1-shortlist in Colab
+# Agent runbook — nh-v2-diagnostic in Colab
 
 Read this file, `EXPERIMENT_GUIDE.md`, and `RUN_HANDOFF.md` before operating the
 notebook. This runbook supersedes the old mixed-notebook A–E instructions.
@@ -14,11 +14,11 @@ Do not interpret the current preparation request as human approval of unseen dat
 - Every model download, model load and real inference call belongs in Colab.
   The laptop is for source, offline tests and small result artifacts. Do not
   install `requirements-colab.txt` or run the inference CLI on the Mac.
-- Use **`notebooks/normative_hysteresis_shortlist_colab.ipynb`**. It is self-contained;
-  upload that single file. The older `normative_hysteresis_v0_colab.ipynb` and
+- Use **`notebooks/normative_hysteresis_diagnostic_colab.ipynb`**. It is self-contained;
+  upload that single file. The older `normative_hysteresis_shortlist_colab.ipynb`, `normative_hysteresis_v0_colab.ipynb` and
   historical live notebook contain different source and are not this protocol.
-- Version must be `nh-v1-shortlist`. Defaults are `smoke-shortlist-001` and
-  `pilot-shortlist-001`. No real run of this revision was performed during preparation.
+- Version must be `nh-v2-diagnostic`. Defaults are `smoke-diagnostic-001` and
+  `pilot-diagnostic-001`. No real run of this revision was performed during preparation.
 - Human decisions for old smoke runs remain unchanged. They cannot approve this
   changed prompt/schema/design. Do not repair an old rejected review into approval.
 - Read experiment meaning, controls, predictions, metrics and limitations in
@@ -46,19 +46,19 @@ Do not hand-edit the notebook's compressed payload.
 
 ## A — Extract, check, freeze settings and mount Drive (sections 1–5)
 
-1. Open the new notebook in Colab and choose a GPU. A100 is the previously used
-   device; NF4 is intended for a T4-class 16 GB device or larger, with actual memory
+1. Open the new notebook in Colab and choose a GPU. The completed v1 pilot used
+   Tesla T4. NF4 is intended for a T4-class 16 GB device or larger, with actual memory
    checked on the assigned GPU. Keep the same GPU/library metadata through pilot.
    Do not connect Colab to the laptop as a local runtime.
 2. Run extraction. It prints `BUNDLE_SHA256` and creates
-   `/content/nh-shortlist-src-<bundle hash prefix>`. It rejects a different already
+   `/content/nh-diagnostic-src-<bundle hash prefix>`. It rejects a different already
    imported package and refuses to overwrite edited files. If needed, restart the
    session and extract again; do not bypass these checks.
 3. Run dependency installation and software tests. If installation changes an
    already imported library, restart and rerun. Tests must have no failures/skips.
 4. Freeze settings. Both config and notebook pin Qwen/Qwen3-8B to
    `b968826d9c46dd6066d109eabc6255188de91218`, non-thinking, NF4. Keep seed 20260913,
-   context limit 4096, planning/behavior/uptake caps **144/384/160**. Changing these
+   context limit 4096, planning/behavior/uptake caps **384/384/160**. Changing these
    requires a separate experiment; do not silently shrink token budgets after OOM.
 5. Set the smoke and pilot IDs before generating. Use the same ID only to resume
    exactly matching outputs; use a fresh ID for an actual protocol/config change.
@@ -75,8 +75,8 @@ Do not hand-edit the notebook's compressed payload.
 
 Run model loading only on Colab. The cell prints backend metadata and verifies
 six effective generation configurations: smoke/pilot x planning/behavior/uptake.
-Require `DECODING_CHECK_PASSED`. Smoke must have do_sample=False; pilot True,
-temperature 0.7, top_p 0.8, top_k 20; caps are 144/384/160. The backend disables
+Require `DECODING_CHECK_PASSED`. Both stages must have do_sample=True,
+temperature 0.7, top_p 0.8, top_k 20; caps are 384/384/160. The backend disables
 checkpoint-default overrides. The historical smoke metadata bug is not fixed
 merely by seeing a requested do_sample value; inspect effective recorded settings.
 
@@ -86,19 +86,25 @@ perform inference and do not establish that the new prompt works.
 
 ## C — Smoke and audit (sections 7–8)
 
-Run `smoke-shortlist-001` (or the explicitly chosen new ID) once. Expect **32
-trajectories and 108 raw calls**. Use the same ID after interruption; the runner
+Run `smoke-diagnostic-001` (or the explicitly chosen new ID) once. Expect **144
+trajectories and 480 raw calls** (192 planning, 288 terminal). Use the same ID after interruption; the runner
 resumes saved calls. Verify `complete.json`, actual record count and raw digest.
-Analyze and open `transcript_audit.html`. All 32 trajectories must be inspected,
+Analyze and open `transcript_audit.html`. All 144 trajectories must be inspected,
 including planning and both sibling branches, before a human scaling decision.
 
-Start with all six FRESH_B trials, across depth and variant. Check the actual
+Start with all 24 FRESH_B trials across the four scenarios, depths and variants. Check the actual
 eligible rows, copied numbers, chosen minimum and brief_reason. Then inspect all
 remaining conditions. Include failures even when B_success=1 or uptake_correct=1.
 The new indicators separate set, numerical, membership and ranking errors;
 `decision_verified` does not validate free-form prose. Compare variants and
-conditions before aggregates. Smoke covers shipping only: it cannot establish
-empirical comprehension of all four pilot scenarios.
+conditions before aggregates. Smoke covers all four scenarios, but only one sample
+per cell. It is a diagnostic screen, not a precise estimate of competence.
+
+Read baseline_diagnostics.csv and diagnostic_readiness.json, then planning_steps.csv
+and planning_summary.csv. Audit whether recommendations are initially correct and
+fully verified under A/X. In trials.csv compare final_repeats_last_recommendation
+with A_residue; do not confuse the actual recommendation with the true old optimum.
+Smoke uses replication 0 and pilot uses 1–3, so sampled trajectories do not overlap.
 
 If systematic fresh-B failure remains, report that the proposed repair failed.
 Preserve raw records and source; do not silently retry, relabel, remove failures,
@@ -137,7 +143,8 @@ against the approved smoke before pilot inference.
 
 Run the pilot analysis cell. Inspect `audit_selection.json` and every selected
 trajectory: all old choices, wrong choices, incorrect/invalid uptake, malformed
-responses, truncations, unverified decisions and the random correct-choice sample.
+responses, truncations, unverified decisions, incorrect/unverified initial planning
+and the random correct-choice sample.
 Record arithmetic and rationale errors even in nominally successful trials.
 Compare every scenario/variant, then NH, ownership, justification, FH, specificity
 and the actual depth changes. Keep all trials in estimators.

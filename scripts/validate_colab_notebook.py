@@ -18,7 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    source = nbformat.read(ROOT / "notebooks/normative_hysteresis_shortlist_colab.ipynb", as_version=4)
+    source = nbformat.read(ROOT / "notebooks/normative_hysteresis_diagnostic_colab.ipynb", as_version=4)
     nbformat.validate(source)
     for i, cell in enumerate(source.cells):
         if cell.cell_type == "code":
@@ -65,7 +65,7 @@ fixture_path.write_text(json.dumps(fixture))
 from corrigibility_bench.runner import read_json, raw_digest
 assert read_json(pilot_run / 'complete.json')['calls'] == 1440
 assert read_json(pilot_run / 'complete.json')['raw_digest'] == raw_digest(pilot_run)
-assert len(backend.calls) == 108 + 1440
+assert len(backend.calls) == 480 + 1440
 '''))
     # The same production cell intentionally runs twice; each test copy needs its own ID.
     for index, code_cell in enumerate(validation.cells):
@@ -73,7 +73,7 @@ assert len(backend.calls) == 108 + 1440
     NotebookClient(validation, timeout=180, kernel_name="python3", resources={"metadata": {"path": str(work)}}).execute()
     output = work / "offline_integration_executed.ipynb"
     nbformat.write(validation, output)
-    extracted = work / ("nh-shortlist-src-" + source.metadata.source_bundle_sha256[:12])
+    extracted = work / ("nh-diagnostic-src-" + source.metadata.source_bundle_sha256[:12])
     bundle = json.loads((extracted / "bundle_provenance.json").read_text())
     assert bundle["git_commit"]
     for directory, pattern in (("corrigibility_bench", "*.py"), ("tests", "*.py"), ("configs", "*.yaml")):
@@ -89,10 +89,10 @@ assert len(backend.calls) == 108 + 1440
             names = zipped.namelist()
             assert "source/scripts/notebook_workflow.py" in names
             assert "source/docs/EXPERIMENT_GUIDE.md" in names
-            pilot_records = [name for name in names if "/pilot-shortlist-001/records/" in name]
+            pilot_records = [name for name in names if "/pilot-diagnostic-001/records/" in name]
             pilot_counts.append(len(pilot_records))
             if pilot_records:
-                assert "results/raw/normative_hysteresis/smoke-shortlist-001/review_approval.json" in names
+                assert "results/raw/normative_hysteresis/smoke-diagnostic-001/review_approval.json" in names
     assert sorted(pilot_counts) == [0, 1440]
     print("PASS: notebook schema, embedded-source tests, synthetic smoke, closed pilot gate, reusable fixture approval, full synthetic pilot, analysis and both ZIP exports.")
     print("Evidence:", output)
