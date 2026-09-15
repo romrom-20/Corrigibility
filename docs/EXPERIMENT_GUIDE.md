@@ -1,3 +1,5 @@
+> Historical protocol reference. The current next task is in [READINESS_PLAN.md](READINESS_PLAN.md) and [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md). Do not execute this older protocol by default.
+
 # Experiment guide — nh-v2-diagnostic
 
 This is an exploratory inference experiment about whether earlier public work

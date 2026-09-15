@@ -1,42 +1,24 @@
-# Normative Hysteresis — diagnostic protocol v2
+# Normative hysteresis — bounded objective replication
 
-Open [notebooks/normative_hysteresis_diagnostic_colab.ipynb](notebooks/normative_hysteresis_diagnostic_colab.ipynb)
-in hosted Google Colab. Upload that file alone; it embeds source, tests, config and
-instructions. All model downloads and inference belong in Colab, never on the Mac.
+Objective transfer v1 is complete: 117/128 final choices were correct, with all
+state reports and eligibility masks correct. Remaining old-option errors cluster
+by row order and label; self-planning hysteresis has not been established.
+Read [findings](docs/history/OBJECTIVE_TRANSFER_V1_20260915.md) and
+[version history](docs/EXPERIMENT_HISTORY.md).
 
-The completed v1 pilot revealed baseline and planning errors and does not justify
-scaling unchanged. Its [findings](docs/history/PILOT_SHORTLIST_20260915.md) and
-original shortlist notebook are preserved. Current `nh-v2-diagnostic` adds all-world
-sampled smoke coverage, structured initial recommendations, clearer uptake wording
-and baseline/planning diagnostics. **No real v2 model results are available yet.**
+Next notebook: [objective replication](notebooks/normative_hysteresis_objective_replication_colab.ipynb).
+Upload it alone to hosted Colab. No weights or inference on the Mac.
+This prepared version has not run on a real model yet.
 
-- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): what to run and investigate.
-- [Agent runbook](docs/NOTEBOOK_AGENT_GUIDE.md): setup, review, resume and export.
-- [Experiment guide](docs/EXPERIMENT_GUIDE.md): design, scoring and limitations.
-- [Current handoff](docs/RUN_HANDOFF.md): state and next action.
+`nh-objective-replication-v1`: 512 trajectories / 1536 calls, all four cyclic label
+rotations, four row orders, two seed replicates, four conditions and depths 0/1.
+Original prompts are retained. Every depth-one trial gets an additional independent
+comparison sibling, scored separately. This is a bounded diagnostic, not D.
 
-Defaults: pinned Qwen3-8B, NF4, non-thinking; temperature 0.7 in both stages.
-Diagnostic smoke is **144 trajectories / 480 calls** across every scenario,
-condition, depth and variant. Optional pilot: **432 / 1,440**, using separate
-replication IDs/seeds. Caps: 384 planning / 384 behavior / 160 uptake tokens.
-New run IDs: `smoke-diagnostic-001`, `pilot-diagnostic-001`.
+- [Experiment plan](docs/OBJECTIVE_REPLICATION_PLAN.md)
+- [Next agent assignment](docs/NEXT_AGENT_PROMPT.md)
+- [Current handoff](docs/RUN_HANDOFF.md)
 
-Wrong answers remain in the results. Initial-planning and shortlist accuracy are
-separate from final-choice success and old-optimum residue. New prompts require
-separate interpretation and a new human smoke review. Exact saved approval is
-reusable; recovery does not require reviewing the same unchanged run again.
-
-Offline development (no weights):
-
-```sh
-.venv/bin/python -m unittest discover -s tests -v
-python3 scripts/build_colab_notebook.py
-.venv/bin/python scripts/validate_colab_notebook.py
-python3 scripts/run_normative_hysteresis.py
-```
-
-The validator exercises a synthetic smoke and pilot, approval reuse, analysis and
-exports. Synthetic tests establish software behavior, not model comprehension.
-Canonical source lives in `corrigibility_bench/`; rebuild the notebook after edits.
-Historical config filename: `configs/normative_hysteresis_v0.yaml`, with required
-version `nh-v2-diagnostic`.
+Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. ID objective-replication-001.
+All failures stay included. Preserve exact source/config/runtime on resume and all
+historical artifacts. Factual specificity is unresolved; no automatic larger run.

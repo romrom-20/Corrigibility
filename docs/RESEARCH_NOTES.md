@@ -1,26 +1,40 @@
-# Research notes — diagnostic v2
+# Current update — objective transfer results and bounded replication
 
-Read [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) for the current specification and
-[history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md) for the
-completed v1 pilot. Current revision: `nh-v2-diagnostic`; no real results yet.
+Transfer v1 completed: 117/128 correct final choices, all state reports and copied
+values/eligibility masks correct. Ten old choices cluster by label/order; the
+self/fresh gap did not increase with planning. See
+history/OBJECTIVE_TRANSFER_V1_20260915.md for exact counts and audit limits.
 
-The pilot exposed poor compute baseline competence, incomplete venue shortlists,
-factual-probe confusion and incorrect initial recommendations. Correct JSON and
-correct final labels alone were inadequate readiness checks. The next smoke
-covers every scenario using pilot sampling and scores initial planning.
+Next is nh-objective-replication-v1, implemented in c994b6f: 512 trajectories /
+1536 calls, expanded cyclic labels and two seeds, with an isolated comparison
+sibling. No real run yet; hosted Colab only. Follow OBJECTIVE_REPLICATION_PLAN.md
+and NEXT_AGENT_PROMPT.md. No established ownership effect or factual specificity.
 
-Do not optimize the task until a desired residue effect appears. Distinguish true
-old-optimum choices, repetition of actual prior recommendations, generic task
-mistakes and sibling uptake reports. Do not exclude failed planning from primary
-denominators or treat a separate verbal report as proof of internal understanding.
+The earlier notes below describe the preceding preparation and are historical.
 
-Structured planning changes the manipulation, especially at k=1. Neutral and
-factual-only controls remain prose; token counts and content are not matched.
-Label rotation and reversed row order remain coupled. Four handcrafted scenarios
-and one smoke sample per cell support diagnostics, not general population claims.
-The revised uptake prompt is still a leading verbal probe. More compute alone
-does not resolve these limits.
+---
 
-Preserve original outputs and approvals. Agent checks and notes are separate from
-human transcript review. Valid human approval of the exact run should be reused;
-no new agent veto or repeated confirmation is needed.
+# Research continuity
+
+The target is excess old-optimum selection after public self-directed optimization
+and explicit replacement, beyond ordinary task errors and the control conditions.
+See EXPERIMENT_HISTORY.md for the complete progression of measurements and failures.
+A positive effect is not required, and a small null is not proof of general absence.
+
+Readiness now supports trying the focused objective task under transition history.
+Its factual controls remain inadequate. Current nh-objective-transfer-v1 is an
+explicitly narrower feasibility step, not the complete original study. It preserves
+fresh, descriptive, self-justification and other-planner controls and actual public
+artifacts. No factual specificity estimate is computed. Current-state extraction
+is a separate verbal report, not proof of behavior-branch understanding.
+
+All numeric instances and crossed row/label variants remain, including the one
+focused-A failure. Wrong A planning and invalid responses stay in denominators.
+Old-optimum selection and repetition of an actual recommendation stay distinct.
+The two numeric instances share one structure; public-turn count is not a clean
+commitment measure. No code or real data establishes internal goal commitment.
+
+Use OBJECTIVE_TRANSFER_PLAN.md for the next design. Future broad claims still
+require credible factual controls, broader prospective item variation and careful
+interpretation of ownership/descriptive contrasts. No hidden approval threshold,
+automatic expansion, retries of bad responses, or retrospective score changes.

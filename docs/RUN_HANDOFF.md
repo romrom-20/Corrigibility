@@ -1,39 +1,37 @@
-# Next run handoff — diagnostic v2, 2026-09-15
+# Current handoff — bounded objective replication
 
-The v1 pilot completed. Its findings do not justify scaling unchanged. Its protocol
-and pilot lessons are preserved in commit `63e4ac9`; the original export contains
-the actual frozen run source. Read
-[history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md).
+Current implementation: c994b6f, nh-objective-replication-v1. No real model run yet.
+Use the latest notebooks/normative_hysteresis_objective_replication_colab.ipynb
+from review-pasted-text. It embeds the current plan, findings and agent assignment.
+Run hosted Colab only; never load model weights on the Mac.
 
-Current source: `nh-v2-diagnostic`. No real v2 smoke or pilot has run. Previous
-human approval does not cover new prompts. This is implementation preparation,
-not evidence that model comprehension is repaired.
+Transfer v1 is COMPLETE, not pending. Its pasted 128 trajectories / 320 calls
+reproduced: 117 correct final choices, all state reports and masks/copies correct,
+ten old choices and one trap. Presentation clustering and a one-case self/control
+gap motivate this diagnostic, not D. Read history/OBJECTIVE_TRANSFER_V1_20260915.md.
+Older calibration/readiness/factual-control findings remain in EXPERIMENT_HISTORY.md.
 
-Upload only `notebooks/normative_hysteresis_diagnostic_colab.ipynb` to Colab.
-Use `smoke-diagnostic-001`: 144 trajectories / 480 calls, every scenario,
-condition/depth/variant, replication 0, sampled temperature 0.7.
-Optional `pilot-diagnostic-001`: 432 trajectories / 1,440 calls, replications 1–3.
-First inspect the diagnostic smoke, then use the human decision on that exact run.
+Follow NEXT_AGENT_PROMPT.md and OBJECTIVE_REPLICATION_PLAN.md. Budget 512 trajectories
+/ 1536 calls: all four cyclic label rotations, four existing balanced row orders,
+two numeric instances, two seeds, four conditions, depths 0/1. Original prompts are
+preserved. An additional comparison sibling runs for every depth-one trial and is
+scored separately. It never feeds back into original decisions or state probes.
 
-Model: Qwen/Qwen3-8B at `b968826d9c46dd6066d109eabc6255188de91218`, NF4,
-non-thinking. Caps: 384 planning / 384 behavior / 160 uptake; context 4096.
-Choose the Colab GPU before smoke and retain runtime provenance through pilot.
-Do not load models or install GPU dependencies on the Mac.
+Default ID objective-replication-001. Drive parent:
+/content/drive/MyDrive/normative-hysteresis-v0/results
+Raw: raw/objective_replication/objective-replication-001/records/
+Derived: derived/objective_replication/<ID>/<analysis-ID>/
+Keep pinned Qwen3-8B/NF4/non-thinking/temp 0.7 and exact sources/runtime on resume.
+Source backup is source_snapshots/<BUNDLE_SHA256> beside results. A stale empty
+.runner-lock can be removed only after establishing no runner remains active.
+Do not delete raw responses, retry failures or recycle old approval records.
 
-Initial recommendations now use a scoreable shortlist schema under A/X; uptake
-wording distinguishes earlier facts from the unchanged objective; the shortlist
-requires checking all rows; analysis exposes baseline and planning competence.
-These changes define a different protocol.
+Software verification: five offline tests plus a complete synthetic notebook run,
+1536 saved invalid responses, completed resume without new generation, summary,
+comparison output and ZIP export. These are not model results. The notebook's
+source_bundle_sha256 identifies the final portable bundle; record it from setup.
 
-Read [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md),
-[NOTEBOOK_AGENT_GUIDE.md](NOTEBOOK_AGENT_GUIDE.md), and
-[EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md). Validation commands are in README.
-Synthetic validation cannot approve real data.
-
-Previous live v1 notebook:
-https://colab.research.google.com/drive/1xsm_y9YvDv51xQB-H9Rp5WZ5sXBR06aJ
-It is historical. Record a new v2 URL after upload; do not execute mixed cells.
-Drive results: `/content/drive/MyDrive/normative-hysteresis-v0/results`.
-Source backups: adjacent `source_snapshots/<BUNDLE_SHA256>` folder.
-Save actual v2 IDs, hashes, runtime metadata, review/analysis/export paths and
-executed notebook when the next agent runs it.
+After the live run record URL, bundle, hardware/runtime, run ID/raw digest, Drive
+paths, ZIP and executed notebook. Report fresh competence, original contrasts and
+their depth change, label/order/seed patterns and comparison fixes AND harms.
+No automatic bigger run, positive-effect requirement or factual-specificity claim.
