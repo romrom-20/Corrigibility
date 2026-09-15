@@ -1,8 +1,14 @@
+> Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
+> Do not run its larger pilot. Use [the calibration plan](CALIBRATION_PLAN.md) and
+> `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
+> calls. Read the updated next-agent assignment. The v2 material below is retained
+> for historical protocol/recovery reference, not current run authorization.
+
 # Research notes — diagnostic v2
 
 Read [EXPERIMENT_GUIDE.md](EXPERIMENT_GUIDE.md) for the current specification and
 [history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md) for the
-completed v1 pilot. Current revision: `nh-v2-diagnostic`; no real results yet.
+completed v1 pilot. Current revision: `nh-v2-diagnostic`; smoke completed; see the calibration plan for findings.
 
 The pilot exposed poor compute baseline competence, incomplete venue shortlists,
 factual-probe confusion and incorrect initial recommendations. Correct JSON and

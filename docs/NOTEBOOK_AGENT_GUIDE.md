@@ -1,3 +1,9 @@
+> Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
+> Do not run its larger pilot. Use [the calibration plan](CALIBRATION_PLAN.md) and
+> `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
+> calls. Read the updated next-agent assignment. The v2 material below is retained
+> for historical protocol/recovery reference, not current run authorization.
+
 # Agent runbook — nh-v2-diagnostic in Colab
 
 Read this file, `EXPERIMENT_GUIDE.md`, and `RUN_HANDOFF.md` before operating the

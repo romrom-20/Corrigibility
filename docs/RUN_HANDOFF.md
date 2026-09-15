@@ -1,3 +1,9 @@
+> Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
+> Do not run its larger pilot. Use [the calibration plan](CALIBRATION_PLAN.md) and
+> `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
+> calls. Read the updated next-agent assignment. The v2 material below is retained
+> for historical protocol/recovery reference, not current run authorization.
+
 # Next run handoff — diagnostic v2, 2026-09-15
 
 The v1 pilot completed. Its findings do not justify scaling unchanged. Its protocol
@@ -5,7 +11,7 @@ and pilot lessons are preserved in commit `63e4ac9`; the original export contain
 the actual frozen run source. Read
 [history/PILOT_SHORTLIST_20260915.md](history/PILOT_SHORTLIST_20260915.md).
 
-Current source: `nh-v2-diagnostic`. No real v2 smoke or pilot has run. Previous
+Current source: `nh-v2-diagnostic`. The real v2 smoke has completed; no v2 pilot has run. Previous
 human approval does not cover new prompts. This is implementation preparation,
 not evidence that model comprehension is repaired.
 

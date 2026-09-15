@@ -1,3 +1,9 @@
+> Current next step (2026-09-15): v2 smoke completed and failed key competence checks.
+> Do not run its larger pilot. Use [the calibration plan](docs/CALIBRATION_PLAN.md) and
+> `notebooks/normative_hysteresis_calibration_colab.ipynb` for 272 isolated diagnostic
+> calls. Read the updated next-agent assignment. The v2 material below is retained
+> for historical protocol/recovery reference, not current run authorization.
+
 # Normative Hysteresis — diagnostic protocol v2
 
 Open [notebooks/normative_hysteresis_diagnostic_colab.ipynb](notebooks/normative_hysteresis_diagnostic_colab.ipynb)
@@ -8,7 +14,7 @@ The completed v1 pilot revealed baseline and planning errors and does not justif
 scaling unchanged. Its [findings](docs/history/PILOT_SHORTLIST_20260915.md) and
 original shortlist notebook are preserved. Current `nh-v2-diagnostic` adds all-world
 sampled smoke coverage, structured initial recommendations, clearer uptake wording
-and baseline/planning diagnostics. **No real v2 model results are available yet.**
+and baseline/planning diagnostics. **The v2 smoke exposed continuing failures; see the calibration plan.**
 
 - [Next agent assignment](docs/NEXT_AGENT_PROMPT.md): what to run and investigate.
 - [Agent runbook](docs/NOTEBOOK_AGENT_GUIDE.md): setup, review, resume and export.
