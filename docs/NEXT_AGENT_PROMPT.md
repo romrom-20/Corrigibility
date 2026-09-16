@@ -1,80 +1,93 @@
-# Next agent: bounded objective replication in hosted Colab
+# Next agent: execution readiness in hosted Colab
 
-Implementing commit: c994b6f. Use the latest notebook on review-pasted-text,
-including the subsequent handoff update. Read EXPERIMENT_HISTORY.md,
-history/OBJECTIVE_TRANSFER_V1_20260915.md and OBJECTIVE_REPLICATION_PLAN.md first.
+Use **notebooks/normative_hysteresis_execution_readiness_colab.ipynb** from the
+current workspace branch. Protocol `nh-execution-readiness-v1`. Read
+EXPERIMENT_HISTORY.md, history/OBJECTIVE_REPLICATION_V1_20260916.md and
+EXECUTION_READINESS_PLAN.md first. Do not run the old replication notebook again.
 
-## What happened and what we are testing
+## What happened
 
-Transfer v1 completed 128 trajectories / 320 calls on A100. Final B choices were
-117/128 correct; all state reports, copied values and eligibility masks were
-correct. Ten old-option errors remained, eight in order 3 and nine choosing NORI.
-Depth-one self old choices were 2/16 versus 1/16 for each control. The self/fresh
-gap was already one case at depth zero. This does not establish self-investment
-hysteresis. The pasted records reproduced; original archive integrity was not
-independently verified. Factual controls remain unresolved.
+Objective replication COMPLETED: 512 trajectories / 1,536 calls, 487/512 verified
+B choices, 512/512 state reports. Twenty-four of 25 behavioral failures share one
+label rotation. All failures have correct copied numbers/masks but wrong selection.
+Self/control differences are tiny; no established self-justification effect.
+Comparison prose fixes three and harms five. The pasted-record audit matches code;
+original archive integrity was not independently verified. Earlier factual controls
+failed. The early decoding-default bug is already fixed, not a newly diagnosed
+cause of these errors.
 
-The user authorized building this bounded diagnostic. Execute the prepared
-nh-objective-replication-v1 notebook; do not reopen old smoke signoff gates or
-require old human approval to cover new prompts. Do not invent human judgments.
-This authorization does not imply an automatic larger study or D run.
+## Authorized next work
 
-## Exact run
+The user requested understanding the versions, implementing a repair and preparing
+this handoff for Colab. Execute the prepared finite fresh-task diagnostic when
+assigned to run it. Do not reopen old signoff gates, invent a human review, or
+interpret the new software as approval of an unseen pilot. This notebook contains
+no main pilot. No positive hysteresis result is required.
 
-Upload notebooks/normative_hysteresis_objective_replication_colab.ipynb alone to
-hosted Google Colab. NO local runtime, model weights or GPU work on the Mac.
-Select the hosted GPU before model loading; record actual hardware. Use the
-existing HF secret without printing it. Pinned Qwen3-8B revision, NF4, non-thinking,
-temperature 0.7; preserve config/runtime. Run notebook cells top to bottom:
-extract/check bundled source, install, offline tests/design audit, mount Drive and
-back up sources, load model, run, analyze and export. No live model run has been
-performed by the implementation agent; synthetic notebook validation is software
-verification only.
+The candidate asks the model for a sorted `ranked_eligible` list before its choice.
+Scoring checks the list and choice independently; it never changes a wrong answer.
+The historical rowwise reference and independent state probe stay separate. Both
+objective A/B and factual-rule X/Y prerequisites are included. There are no prior
+plans or fact updates in this stage; factual supersession remains future work.
 
-Default RUN_ID: objective-replication-001.
-Budget: 512 trajectories / 1536 calls. Two numeric items, four row orders, four
-cyclic label rotations, four conditions, depths zero/one and two seed replicates.
-There are 256 planning, 512 original behavior, 512 state and 256 comparison calls.
-The comparison sibling runs on EVERY depth-one trial, not just failed trials.
-Its prompt asks for explicit numerical comparison; its response never enters
-baseline behavior or the state probe. All original prompts remain unchanged.
+## Exact execution
 
-Drive root: /content/drive/MyDrive/normative-hysteresis-v0/results
-Raw: raw/objective_replication/objective-replication-001/records/
-Derived: derived/objective_replication/<RUN_ID>/<analysis-ID>/
+1. Upload the single new notebook to hosted Google Colab. Select a GPU first;
+   no local runtime, model weights or GPU work on the Mac. Reuse the existing HF
+   secret without printing it. Preserve pinned Qwen3-8B/NF4/non-thinking/0.7 settings.
+2. Run top to bottom: extract and verify bundle, install, offline tests, mount
+   Drive, back up exact source, load the model, screen, conditional confirmation,
+   export. Record actual hardware and library metadata. Restart if another
+   notebook's modules are already imported; do not bypass the source check.
+3. Default screen ID `execution-screen-001`: **768 calls**. Four numeric tables,
+   four row orders, four cyclic label rotations, four rules, three formats.
+   Tables 0/1 preserve historical numbers; 2/3 are non-affine numeric additions,
+   still one underlying task structure. Decision caps 768 in both formats, state 160.
+4. The candidate is fixed as ranked, never whichever format happens to win.
+   Require ranked AND state to reach 15/16 verified untruncated per item/rule
+   and 61/64 per rule. These prospective tolerances are not significance tests.
+   Wrong/invalid/truncated outputs stay in N. Do not alter thresholds after seeing data.
+5. If screen fails, confirmation is skipped; continue through export. If it passes,
+   the notebook runs exactly **512** fresh ranked/state confirmation calls with
+   different predefined seeds, ID `execution-confirm-001`. Maximum total **1,280**.
+   The runner independently validates the screen, source/config/runtime and raw
+   digest. No manual gate edits. Analyze confirmation separately with the same
+   tolerances; never pool it with screen to rescue a failure.
 
-## Resume and completion
+Drive root: `/content/drive/MyDrive/normative-hysteresis-v0/results`.
+Raw: `raw/execution_readiness/<ID>/records/`.
+Derived: `derived/execution_readiness/<ID>/<analysis-ID>/`.
+Backup: `source_snapshots/<BUNDLE_SHA256>` beside results.
 
-Saved per-call JSON is reused only with exact source/config/model/runtime. After
-a disconnect, check whether the original process is still running before starting
-another. Restore the exact notebook/environment and rerun setup/load/run. Never
-retry wrong answers, delete records, repair planning prose or filter failed plans.
-If .runner-lock remains after an actual process death, verify no runner is active
-and remove only that empty lock directory. A changed runtime needs a new run ID;
-do not silently mix hardware or append incompatible calls. Preserve completed runs.
+## Resume and failures
 
-## Audit and report
+Reuse an ID only for the exact same sources/config/model/runtime/stage and parent
+screen. Calls are immutable and resumed individually. After a disconnect establish
+whether the original process is still running before launching another. Remove a
+stale empty `.runner-lock` only after its process is confirmed stopped. Never
+remove raw outputs/manifests, retry wrong answers or repair model-generated lists.
+A different runtime requires a new screen ID and a matching confirmation run;
+do not mix an old screen with a new runtime. Preserve all historical runs.
 
-Review summary.json, trials.csv, comparison_trials.csv, design_audit.json and all
-transcripts. Check fresh baseline and initial A competence first. Inspect original
-self-minus-fresh/describe/other by depth and descriptive_contrast_depth_change.
-Inspect item/order/rotation/replicate strata and joint combinations. Count selected
-labels, mask/copy/minimum errors, old optima versus traps, truncation, invalidity,
-and repetitions of actual recommendations. Retain every primary denominator.
+## Audit, report, stop
 
-Compare comparison success with original success, including both fixed errors and
-newly harmed successes. Keep branches separate; do not substitute corrected
-answers into baseline results. Its state probe describes common pre-intervention
-context, not post-comparison uptake. Seeds differ between branches, so individual
-fixes cannot identify a causal mechanism. Manually inspect numerical comparisons
-in brief_reason and neutral/descriptive planning instructions. Report uncertainty;
-do not hunt for a positive seed, suppress failures or expand automatically.
+Review cases.csv, summary.json, readiness.json, design_audit.json, screen
+format_pairs.csv and transcripts.html. Inspect every invalid/truncated/wrong or
+unverified decision, every ranking/choice contradiction, and at least ten correct
+examples. Inspect factual masks, equality boundaries and item/order/label strata.
+Report choices AND full verification. Row-error totals need valid-response counts.
+Show both fixed and harmed pairs; separate sampled draws do not identify a mechanism.
+Reasons are not automatically verified. A separate correct state probe does not
+prove understanding within the decision call. Old choice in A/X is correct.
 
-Two affine numeric instances are one task structure. A label/order effect is not
-internal commitment, and correct state reports are not proof of understanding.
-No factual specificity or population claim. Preserve negative/inconclusive results.
-Broader task variation and repaired factual controls precede any full study.
+If screen/confirmation fails, report the failed repair; do not keep editing prompts,
+select passing labels/tables or switch models/precision during the run. If both
+pass, report fresh execution readiness only. Retained-history transition and factual
+update validation are still required before a main hysteresis pilot. No automatic
+larger study, pilot launch, or claim of factual specificity or internal commitment.
 
-Deliver the raw/source/derived ZIP and executed notebook, live Colab URL, source
-bundle and backup path, actual runtime, run ID, completion digest, artifact paths,
-counts and substantive errors. Keep AI audit notes separate from human judgments.
+Deliver ZIP with source/raw/derived files, executed notebook, live Colab URL,
+bundle/backup, actual runtime, IDs/completion digests, artifact paths, full counts,
+readiness failure reasons and substantive transcript errors. Keep AI observations
+separate from human judgments. Implementation tests and synthetic notebook runs
+are not model evidence; this new protocol has not yet had a live model run.

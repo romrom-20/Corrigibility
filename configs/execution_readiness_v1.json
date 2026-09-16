@@ -1,0 +1,11 @@
+{
+  "experiment_version": "nh-execution-readiness-v1",
+  "model_id": "Qwen/Qwen3-8B",
+  "model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+  "quantization": "nf4",
+  "seed": 20260921,
+  "top_p": 0.8,
+  "top_k": 20,
+  "context_limit": 4096,
+  "temperature": 0.7
+}

@@ -1,3 +1,8 @@
+> Current execution: use [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md) and
+> [EXECUTION_READINESS_PLAN.md](EXECUTION_READINESS_PLAN.md). Objective replication
+> is complete. The v2 workflow below is archival; do not execute its pilot or
+> signoff steps for the new fresh-task diagnostic.
+
 > Historical protocol reference. The current next task is in [READINESS_PLAN.md](READINESS_PLAN.md) and [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md). Do not execute this older protocol by default.
 
 > Current next step (2026-09-15): v2 smoke completed and failed key competence checks.

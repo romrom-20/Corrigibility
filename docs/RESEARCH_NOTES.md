@@ -1,3 +1,21 @@
+# Current update — replication completed; execution readiness next
+
+Replication v1 completed: 487/512 verified choices, 512/512 state reports. Twenty-four
+of 25 errors share a label rotation; all wrong baseline choices have correct copied
+numbers and eligibility masks. The comparison sibling fixes three and harms five.
+No established self-justification effect or newly diagnosed backend defect.
+See history/OBJECTIVE_REPLICATION_V1_20260916.md and EXECUTION_READINESS_PLAN.md.
+
+Next: fresh execution screen with model-produced ranked eligible labels, explicit
+ranking/choice checks, restored factual rules and separate confirmation seeds.
+This candidate has no real-model results yet. Passing fresh execution does not
+validate retained histories or factual supersession and does not launch a pilot.
+Follow NEXT_AGENT_PROMPT.md. Historical protocols and scores remain unchanged.
+
+---
+
+## Archived notes preceding the completed replication
+
 # Current update — objective transfer results and bounded replication
 
 Transfer v1 completed: 117/128 correct final choices, all state reports and copied

@@ -26,11 +26,16 @@ credible baseline competence are needed before such a claim; null results count.
    choices, 128/128 state and mask/copy correctness. Ten old choices clustered
    by row order/label; self/fresh gap did not grow with planning. See
    history/OBJECTIVE_TRANSFER_V1_20260915.md. Implementation: 99adf52.
-7. Current preparation: nh-objective-replication-v1, implementing commit c994b6f.
-   512 trajectories / 1536 calls across all four cyclic label rotations and two
-   seed replicates, with a separately scored explicit-comparison sibling at depth
-   one. No real model run yet. See OBJECTIVE_REPLICATION_PLAN.md. Factual
-   specificity remains unresolved.
+7. Objective replication v1 COMPLETED: 512 trajectories / 1536 calls. 487/512
+   verified B decisions, all state reports correct; 24/25 failures in one label
+   rotation. Comparison fixes 3 and harms 5. No convincing self/depth effect.
+   See history/OBJECTIVE_REPLICATION_V1_20260916.md. Implementation c994b6f;
+   its notebook/source remain frozen.
+8. Current preparation: nh-execution-readiness-v1. Fresh rowwise/ranked/state
+   screen restores A/B/X/Y prerequisites with a prospectively fixed candidate
+   and readiness criteria, then conditional separate-seed confirmation.
+   768 screen + at most 512 confirmation calls. No live model result yet.
+   See EXECUTION_READINESS_PLAN.md. No main pilot or factual-update claim.
 
 Keep every historical notebook/export and its frozen source. Old approval and old
 scores remain attached to old runs; do not pool versions or reinterpret historical

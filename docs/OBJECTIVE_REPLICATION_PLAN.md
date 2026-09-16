@@ -1,3 +1,7 @@
+> Completed on 2026-09-16. See [results](history/OBJECTIVE_REPLICATION_V1_20260916.md).
+> The frozen pre-run plan below is archival. Next work is
+> [execution readiness](EXECUTION_READINESS_PLAN.md); do not rerun this protocol by default.
+
 # Bounded objective replication and comparison diagnostic
 
 Version: nh-objective-replication-v1. Prepared for hosted Colab; no real results yet.
