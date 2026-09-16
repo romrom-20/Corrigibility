@@ -1,3 +1,13 @@
+# Latest: component diagnosis after completed execution screen
+
+The ranked repair failed; all 768 raw records reproduce. State X failures copy
+the schema identifier but report numerical criteria correctly. Eligibility and
+minimum selection are separable failures. See history/EXECUTION_READINESS_V1_20260916.md.
+Current plan: COMPONENT_DIAGNOSTIC_PLAN.md, 480 calls on hosted Colab only, not yet
+run. No D or confirmation. The material below is earlier research history.
+
+---
+
 # Current update — replication completed; execution readiness next
 
 Replication v1 completed: 487/512 verified choices, 512/512 state reports. Twenty-four

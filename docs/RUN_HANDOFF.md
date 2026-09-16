@@ -1,37 +1,24 @@
-# Current handoff — fresh execution readiness before another pilot
+# Current handoff — isolate components after failed ranking repair
 
-**Objective replication is complete. The new execution-readiness protocol has not
-run on a real model.** See NEXT_AGENT_PROMPT.md for the executable assignment and
-EXECUTION_READINESS_PLAN.md for the design and exact readiness tolerances.
+Execution screen COMPLETE: 768 T4 calls, analysis validated; ranked candidate failed.
+Preserved implementation and findings: b032fd8. See history/EXECUTION_READINESS_V1_20260916.md.
+Do not rerun screen, confirmation or D. Historical source/notebook remains frozen.
 
-Upload `notebooks/normative_hysteresis_execution_readiness_colab.ipynb` alone to
-hosted Colab. Protocol `nh-execution-readiness-v1`. No local weights or inference.
-Screen `execution-screen-001`: 768 calls (rowwise/ranked/state, A/B/X/Y, all crossed
-items/orders/rotations). If the fixed ranked/state screen passes, confirmation
-`execution-confirm-001`: 512 additional calls with separate seeds. Max 1,280.
-Failed screen skips confirmation and still exports. Neither stage launches a pilot.
+Current prepared version nh-component-diagnostic-v1; no real run yet.
+Notebook notebooks/normative_hysteresis_component_diagnostic_colab.ipynb.
+480 independent calls: eligibility 128, comparison 288, state 64. No automatic next
+stage, no readiness gate, no answer feedback. Read COMPONENT_DIAGNOSTIC_PLAN.md
+and NEXT_AGENT_PROMPT.md for the actual hypotheses and limits.
 
-Model-produced ranked eligible labels make selection/choice contradictions
-measurable. The scorer never supplies or substitutes the answer. Historic numeric
-items and every presentation cell stay included; two additional non-affine tables
-remain the same task structure. Factual execution is tested again; actual factual
-supersession and history-bearing competence remain future validation requirements.
+All model work on hosted Colab; no Mac weights. Default components-001 under
+/content/drive/MyDrive/normative-hysteresis-v0/results/raw/component_diagnostic/.
+Prefer T4 for continuity, frozen Qwen3-8B/NF4 config. Preserve exact runtime on resume.
+Completed-run analysis needs no model; new runner gives field-level mismatch
+reports and retains original exceptions when lock cleanup fails. Remove a stale
+lock only after confirming no old runner remains; never alter saved records.
 
-Pinned Qwen3-8B, NF4, non-thinking, temperature 0.7. Decision/state caps 768/160.
-Drive root: `/content/drive/MyDrive/normative-hysteresis-v0/results`.
-Raw: `raw/execution_readiness/<ID>/`; derived: `derived/execution_readiness/<ID>/<analysis-ID>/`.
-Source backup: `source_snapshots/<BUNDLE_SHA256>` beside results. Record the bundle
-from notebook setup. Restore exact source/config/runtime for resume. Never delete
-records, retry failures, bypass locks or recycle historical review approvals.
-
-Replication findings: 487/512 correct baseline decisions, all state probes correct,
-24/25 errors in one label rotation; explicit comparison fixes 3 and harms 5.
-The pasted records match prompts/parsers/seeds/decoding/counts. Original archive
-bytes were not supplied. See history/OBJECTIVE_REPLICATION_V1_20260916.md.
-This is a task-execution validity issue, not a newly established backend bug.
-
-Local software tests and the portable synthetic validator cover both passing and
-failing routes, conditional confirmation, interruption/resume and export. Synthetic
-answers are explicitly labeled and are not evidence that Qwen passes the new task.
-After Colab, record live URL, actual runtime, source bundle/backup, IDs/digests,
-ZIP/executed notebook paths, every denominator and the observed readiness outcome.
+Export source/raw/derived ZIP plus executed notebook and record bundle, hardware,
+run ID/digest, URL and Drive paths. Software tests cover exact predicate answers,
+reverse comparisons, placeholder errors, interruption/resume, mixed-runtime refusal,
+record tampering, lock ownership and missing-lock exception preservation. End-to-end
+portable validation uses synthetic successes/failures, not model results.

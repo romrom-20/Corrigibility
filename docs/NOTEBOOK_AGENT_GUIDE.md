@@ -1,3 +1,14 @@
+# Current notebook routing
+
+Use notebooks/normative_hysteresis_component_diagnostic_colab.ipynb and
+NEXT_AGENT_PROMPT.md for the new bounded 480-call diagnostic. The execution screen
+is COMPLETE and FAILED: do not follow earlier instructions to run its confirmation.
+Historical instructions below apply only to their named frozen versions. For the
+new runner, completed results need no model reload, resume differences are printed,
+and stale lock recovery is explicit after confirming all old sessions stopped.
+
+---
+
 > Current execution: use [NEXT_AGENT_PROMPT.md](NEXT_AGENT_PROMPT.md) and
 > [EXECUTION_READINESS_PLAN.md](EXECUTION_READINESS_PLAN.md). Objective replication
 > is complete. The v2 workflow below is archival; do not execute its pilot or

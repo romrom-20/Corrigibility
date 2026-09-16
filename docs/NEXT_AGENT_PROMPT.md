@@ -1,93 +1,59 @@
-# Next agent: execution readiness in hosted Colab
+# Next agent — component diagnosis, hosted Colab only
 
-Use **notebooks/normative_hysteresis_execution_readiness_colab.ipynb** from the
-current workspace branch. Protocol `nh-execution-readiness-v1`. Read
-EXPERIMENT_HISTORY.md, history/OBJECTIVE_REPLICATION_V1_20260916.md and
-EXECUTION_READINESS_PLAN.md first. Do not run the old replication notebook again.
+Read EXPERIMENT_HISTORY.md, history/EXECUTION_READINESS_V1_20260916.md, and
+COMPONENT_DIAGNOSTIC_PLAN.md. The execution screen is COMPLETE (768 T4 calls).
+The ranked candidate FAILED; confirmation and D must not run. This is a new,
+bounded 480-call diagnostic requested after reviewing the raw failures.
 
-## What happened
+What we learned: ranked B copied values/eligibility correctly but reversed 17 pairs;
+14 final choices wrong, three correct despite reversed ranking; two omitted labels.
+Factual rules exclude 114 truly eligible rows, all strictly below time limits, and
+also misselect with correct masks. All 11 failed state probes merely copied the
+rule-name placeholder; numerical criteria are correct. Scores remain frozen.
+Do not call these fresh failures self-investment or factual-update hysteresis.
 
-Objective replication COMPLETED: 512 trajectories / 1,536 calls, 487/512 verified
-B choices, 512/512 state reports. Twenty-four of 25 behavioral failures share one
-label rotation. All failures have correct copied numbers/masks but wrong selection.
-Self/control differences are tiny; no established self-justification effect.
-Comparison prose fixes three and harms five. The pasted-record audit matches code;
-original archive integrity was not independently verified. Earlier factual controls
-failed. The early decoding-default bug is already fixed, not a newly diagnosed
-cause of these errors.
+Upload notebooks/normative_hysteresis_component_diagnostic_colab.ipynb alone to
+HOSTED Colab. No model weights, inference dependencies or local runtime on the Mac.
+Use existing HF secret without printing it. Prefer T4 to match the prior screen;
+keep pinned Qwen3-8B/NF4/non-thinking and frozen config. Record actual GPU/runtime.
+Run cells top to bottom: extract, install, offline tests, mount Drive/source backup,
+load only if incomplete, run/resume, analyze, export. No real run yet: synthetic
+validation is software evidence, not model results or human approval.
 
-## Authorized next work
+Default RUN_ID components-001. 480 independent calls: eligibility 128, comparison 288,
+state 64. Component prompts are deliberately simpler than full tasks. No prior
+answers or computed solutions enter prompts, no retries, no automatic next stage.
+The typed state template is prospective; do not change old scores or gates.
 
-The user requested understanding the versions, implementing a repair and preparing
-this handoff for Colab. Execute the prepared finite fresh-task diagnostic when
-assigned to run it. Do not reopen old signoff gates, invent a human review, or
-interpret the new software as approval of an unseen pilot. This notebook contains
-no main pilot. No positive hysteresis result is required.
+Drive root /content/drive/MyDrive/normative-hysteresis-v0/results
+Raw raw/component_diagnostic/components-001/records/
+Derived derived/component_diagnostic/<ID>/<analysis-ID>/
+Sources source_snapshots/<BUNDLE_SHA256> beside results.
 
-The candidate asks the model for a sorted `ranked_eligible` list before its choice.
-Scoring checks the list and choice independently; it never changes a wrong answer.
-The historical rowwise reference and independent state probe stay separate. Both
-objective A/B and factual-rule X/Y prerequisites are included. There are no prior
-plans or fact updates in this stage; factual supersession remains future work.
+On interruption, check whether another session is active before resuming. Saved
+calls are immutable. The runner explains exact source/config/runtime mismatches;
+restore the saved environment or use a new ID, never overwrite the manifest.
+If an old runner is definitely stopped, remove its lock using
+cal.recover_lock(run_folder, confirmed_stopped=True). This is never automatic.
+Missing/changed lock during active work stops generation. A completed run can
+validate/export without loading the model; use the notebook's completed-run path.
+Do not copy these new runner functions into the historical source snapshot.
 
-## Exact execution
+Audit all failures and correct examples. Report each component/variant separately,
+rule/item/row and metric/pair/direction strata, and state identifier versus criterion
+accuracy. Check JSON/schema/truncation errors. Matched pairs use different sampled
+draws; report fixes AND harms, never claim individual fixes prove a mechanism.
+Numeric prompts can repeat: do not count repeated prompts or four numeric tables
+as independent task families. Label mapping and schema differ together in the
+labeled comparison arm. Context load changes in eligibility. Interpret accordingly.
 
-1. Upload the single new notebook to hosted Google Colab. Select a GPU first;
-   no local runtime, model weights or GPU work on the Mac. Reuse the existing HF
-   secret without printing it. Preserve pinned Qwen3-8B/NF4/non-thinking/0.7 settings.
-2. Run top to bottom: extract and verify bundle, install, offline tests, mount
-   Drive, back up exact source, load the model, screen, conditional confirmation,
-   export. Record actual hardware and library metadata. Restart if another
-   notebook's modules are already imported; do not bypass the source check.
-3. Default screen ID `execution-screen-001`: **768 calls**. Four numeric tables,
-   four row orders, four cyclic label rotations, four rules, three formats.
-   Tables 0/1 preserve historical numbers; 2/3 are non-affine numeric additions,
-   still one underlying task structure. Decision caps 768 in both formats, state 160.
-4. The candidate is fixed as ranked, never whichever format happens to win.
-   Require ranked AND state to reach 15/16 verified untruncated per item/rule
-   and 61/64 per rule. These prospective tolerances are not significance tests.
-   Wrong/invalid/truncated outputs stay in N. Do not alter thresholds after seeing data.
-5. If screen fails, confirmation is skipped; continue through export. If it passes,
-   the notebook runs exactly **512** fresh ranked/state confirmation calls with
-   different predefined seeds, ID `execution-confirm-001`. Maximum total **1,280**.
-   The runner independently validates the screen, source/config/runtime and raw
-   digest. No manual gate edits. Analyze confirmation separately with the same
-   tolerances; never pool it with screen to rescue a failure.
+No thresholds here authorize a main pilot. If elementary components fail, identify
+which and reassess task/model suitability. If they pass, investigate composition
+in a future frozen full-task design, preserving factual controls and the original
+ownership question. Do not repeatedly tune to pass, select favorable cases or
+require a positive effect. Existing user authorization covers this bounded run;
+old human signoffs remain attached to old prompts. Never invent human judgments.
 
-Drive root: `/content/drive/MyDrive/normative-hysteresis-v0/results`.
-Raw: `raw/execution_readiness/<ID>/records/`.
-Derived: `derived/execution_readiness/<ID>/<analysis-ID>/`.
-Backup: `source_snapshots/<BUNDLE_SHA256>` beside results.
-
-## Resume and failures
-
-Reuse an ID only for the exact same sources/config/model/runtime/stage and parent
-screen. Calls are immutable and resumed individually. After a disconnect establish
-whether the original process is still running before launching another. Remove a
-stale empty `.runner-lock` only after its process is confirmed stopped. Never
-remove raw outputs/manifests, retry wrong answers or repair model-generated lists.
-A different runtime requires a new screen ID and a matching confirmation run;
-do not mix an old screen with a new runtime. Preserve all historical runs.
-
-## Audit, report, stop
-
-Review cases.csv, summary.json, readiness.json, design_audit.json, screen
-format_pairs.csv and transcripts.html. Inspect every invalid/truncated/wrong or
-unverified decision, every ranking/choice contradiction, and at least ten correct
-examples. Inspect factual masks, equality boundaries and item/order/label strata.
-Report choices AND full verification. Row-error totals need valid-response counts.
-Show both fixed and harmed pairs; separate sampled draws do not identify a mechanism.
-Reasons are not automatically verified. A separate correct state probe does not
-prove understanding within the decision call. Old choice in A/X is correct.
-
-If screen/confirmation fails, report the failed repair; do not keep editing prompts,
-select passing labels/tables or switch models/precision during the run. If both
-pass, report fresh execution readiness only. Retained-history transition and factual
-update validation are still required before a main hysteresis pilot. No automatic
-larger study, pilot launch, or claim of factual specificity or internal commitment.
-
-Deliver ZIP with source/raw/derived files, executed notebook, live Colab URL,
-bundle/backup, actual runtime, IDs/completion digests, artifact paths, full counts,
-readiness failure reasons and substantive transcript errors. Keep AI observations
-separate from human judgments. Implementation tests and synthetic notebook runs
-are not model evidence; this new protocol has not yet had a live model run.
+Deliver ZIP (source/raw/derived), executed notebook, live URL, bundle/backup, actual
+runtime, run ID/digest, artifact paths and substantive diagnosis. Stop GPU calls
+at 480. Do not rerun execution-screen-001 or launch its failed confirmation.

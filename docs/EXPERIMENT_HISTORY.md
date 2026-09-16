@@ -42,3 +42,14 @@ scores remain attached to old runs; do not pool versions or reinterpret historic
 outcomes under a revised probe. Current user instructions and NEXT_AGENT_PROMPT.md
 specify execution; old guides are archival context. Synthetic tests never count
 as model results or human approval.
+
+## Execution screen result and current follow-up (2026-09-16)
+
+Execution readiness v1 is now COMPLETE: 768 calls, ranked candidate failed.
+See history/EXECUTION_READINESS_V1_20260916.md for the raw-record audit and revised
+interpretation of template-copying state errors. Earlier preparation statements
+above describe the state before this completed run.
+
+Current: nh-component-diagnostic-v1, 480 independent component calls, no real
+results yet. Eligibility, pairwise comparison and state-template variants isolate
+smaller operations. No automatic gate, confirmation or D. See COMPONENT_DIAGNOSTIC_PLAN.md.
