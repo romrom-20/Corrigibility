@@ -1,10 +1,11 @@
 # Before we can measure resistance to correction, we have to measure execution
 
-*A research notebook in prose, through 18 September 2026. The experiments below
-are exploratory and concern one pinned model configuration on small artificial
-tasks. This account separates observed outputs, software checks, and hypotheses.
-Sections 1-11 cover work through 16 September; sections 12-13 report the
-completed instrument-qualification runs of 17-18 September.*
+*A research notebook in prose, through 13 October 2026. This account separates
+observed outputs, software checks, and hypotheses. Sections 1-11 cover work
+through 16 September; sections 12-13 report the completed component-qualification
+runs of 17-18 September under one pinned model configuration. Section 14 covers
+the subsequent qualification failures, audit-driven redesign, and October smoke
+pilot; section 15 records the owner's next steps.*
 
 We started with a question about what happens after an objective changes. A model
 has been asked to optimize for A. It has publicly worked on that objective, perhaps
@@ -205,11 +206,12 @@ at least as pressing an explanation to investigate as prior self-directed work.
 
 ## 7. Replication: the suspected history pattern did not strengthen
 
-The [512-trajectory replication](history/OBJECTIVE_REPLICATION_V1_20260916.md)
-expanded label rotations and seed replicates and added an explicit-comparison
-sibling. It completed 1,536 calls. Baseline decisions were verified in 487/512
-cases; all 512 current-state reports were correct. Every failed baseline answer
+The 512-trajectory replication expanded label rotations and seed replicates and
+added an explicit-comparison sibling. It completed 1,536 calls. Baseline decisions
+were verified in 487/512 cases; all 512 current-state reports were correct. Every failed baseline answer
 had correct copied values and eligibility masks but selected the wrong minimum.
+The historical note `history/OBJECTIVE_REPLICATION_V1_20260916.md` is not present
+in this repository.
 
 Of the 25 errors, 23 chose the old optimum and two chose the unfiltered trap.
 Twenty-four errors shared label rotation one; 22 selected NORI. That clustering
@@ -229,11 +231,13 @@ failed candidate repair.
 
 ## 8. The ranked certificate made things worse
 
-The [768-call execution screen](history/EXECUTION_READINESS_V1_20260916.md)
-returned to fresh tasks and restored the factual rules. It tested a prospectively
-chosen ranked-output candidate against rowwise classification and state reporting.
+The 768-call execution screen returned to fresh tasks and restored the factual
+rules. It tested a prospectively chosen ranked-output candidate against rowwise
+classification and state reporting.
 The hope was that an ordered eligible list would expose or stabilize minimum
 selection. The candidate failed.
+The historical note `history/EXECUTION_READINESS_V1_20260916.md` is not present
+in this repository.
 
 Fully verified rowwise A/B/X/Y scores were 59/64, 64/64, 24/64 and 23/64.
 Ranked scores were 54/64, 45/64, 2/64 and 15/64. Across matched cases, ranking
@@ -268,16 +272,17 @@ Subsequent runner work made ownership explicit, preserved primary exceptions and
 allowed completed-run validation without reloading a model. That is a software
 reliability improvement, separate from any behavioral result.
 
-## 9. The latest component run: context changes even the direction of errors
+## 9. The 16 September component run: context changes even the direction of errors
 
-The [component diagnostic](history/COMPONENT_DIAGNOSTIC_V1_20260916.md) is the
-latest completed run: 480 independent fresh calls on recorded T4 metadata. Unlike
-several earlier pasted-transcript reviews, this inspection had the source snapshot,
-manifest, raw records and completion digest. All 480 records validate against the
-frozen constructors and scorer; all headline summary counts reproduce. There are
+The component diagnostic completed 480 independent fresh calls on recorded T4
+metadata. Unlike several earlier pasted-transcript reviews, this inspection had
+the source snapshot, manifest, raw records and completion digest. All 480 records
+validate against the frozen constructors and scorer; all headline summary counts reproduce. There are
 no invalid responses or reported truncations. The supplied directory does not
 include an executed notebook, so artifact consistency remains distinct from
 independent verification of the actual runtime.
+The historical note `history/COMPONENT_DIAGNOSTIC_V1_20260916.md` is not present
+in this repository.
 
 The design asked three smaller questions: can the model evaluate an individual
 eligibility predicate, choose between two numbers, and report rule state without
@@ -344,14 +349,16 @@ NF4, model capacity and decoding remain possible contributors, not diagnosed cau
 
 Evidence quality also varies. The earliest smoke gained a later runtime audit.
 Several middle stages were reconstructed from supplied text rather than original
-archive bytes. The latest component export supports source and raw-digest checks.
+archive bytes. The 16 September component export supports source and raw-digest checks.
 Those distinctions are recorded in each linked historical note. They should survive
 any polished account of the work rather than disappearing behind a single headline.
 
-## 11. The next experiments: distinguish the contextual ingredients
+## 11. The plan as of 16 September: distinguish the contextual ingredients
 
-The [new plan](CONTEXT_DIAGNOSTIC_PLAN.md) implements a 1,280-call eligibility
-experiment and a 192-call comparison experiment. Neither has run on a real model.
+The plan at that stage specified a 1,280-call eligibility experiment and a
+192-call comparison experiment. Neither had run on a real model at that point;
+sections 12-13 describe the subsequent work. The historical plan
+`CONTEXT_DIAGNOSTIC_PLAN.md` is not present in this repository.
 
 For eligibility, the core is a two-by-two design: relevant attribute only versus
 all attributes, crossed with absence versus presence of the optimization sentence.
@@ -412,10 +419,11 @@ responses invalid. Every answer after the preamble parsed cleanly. Rescored
 outside the pipeline with the corrected scorer, the same 384 cases went from
 76.8% under NF4/non-thinking to 100% under bf16+thinking: 89 cases fixed, 0
 harmed, with every previously observed failure corrected and no regressions.
-The [rescored ablation report](ABLATION_BF16_THINKING_002_RESCORED_20260918.md)
-records why those numbers were provisional: the frozen-state guard correctly
-refused to validate records whose manifest no longer matched the changed
-scoring code, and it recommended a canonical rerun under a fresh run ID.
+The historical rescored ablation report,
+`ABLATION_BF16_THINKING_002_RESCORED_20260918.md` (not present in this repository),
+is cited in the earlier account for why those numbers were provisional: the
+frozen-state guard correctly refused to validate records whose manifest no longer
+matched the changed scoring code, and it recommended a canonical rerun under a fresh run ID.
 That refusal is the discipline working, not an obstacle to it.
 
 Two limits were written down before the canonical rerun. Quantization and
@@ -426,7 +434,7 @@ the comparison-family reversals (the deterministic 90-over-10 style errors
 under greedy decoding) were a distinct failure mode, untested under the new
 backend.
 
-## 13. Qualification: both components pass under the frozen backend
+## 13. Component qualification: both components pass under the frozen backend
 
 The canonical rerun, ablation-bf16-think-1024-003, repeated the 384
 legacy_verbatim cases under the corrected code and the frozen backend (bf16,
@@ -454,28 +462,62 @@ results/exports/nh-instrument-qualification-8bc1e1a9.zip.
 What this establishes is narrower than it sounds, and worth stating plainly. The
 eligibility component moved from 76.8% to 100%, and the comparison component
 from a rejected 0/24 pilot to 288/288, under one frozen deployed configuration.
-The instrument is qualified for that configuration. Nothing here measures
-normative hysteresis: no A-history treatment arm has run under the qualified
-instrument, the bf16/thinking confound is accepted rather than resolved (this
-is the configuration we intend to deploy, so the combination is the unit), the
-evidence covers one model family, and passing components does not by itself
-certify the composed full task.
+These are component gates for constrained eligibility and ranking under that
+configuration, not full instrument qualification. As of 18 September, no A-history
+treatment arm had run under that configuration. The bf16/thinking confound was
+accepted rather than resolved (the deployed combination was the unit), the
+evidence covered one model family, and passing components did not certify the
+composed full task. These checks concerned the measuring stick, not a measurement
+of normative hysteresis.
 
-## 14. What comes next
+## 14. 19 September–13 October: failed qualification, a new assay, and a smoke pilot
 
-The qualification result changes what is worth building, not what has been
-shown. The plan, in order:
+Full instrument qualification never passed under the pre-Oct-6 design. On
+2 October, `screen-20261002-w08-v7-a1` scored 55/56 correct in a 56-case screen:
+zero valid-wrong responses and one truncation. The 112-case qualification wave,
+`precal-20261002-w09-v7-a1`, scored 110/112 with two truncations. It was not
+instrument-ready: the protocol required zero truncations. The eight-case
+`job_sequence` diagnostic, `diag-20261002-w10-v8job-a1`, scored 7/8 and was
+falsified. On 3 October the v9 diagnostic also failed its predeclared gate.
+The September component passes did not override these failures.
 
-1. Expand from the prototype scenarios to at least twelve solver-verified
-   neutral scenario families, calibrating difficulty without inspecting
-   treatment effects.
-2. Preregister the estimands, factorial contrasts, sample sizes, stopping
-   rules and kill criteria before any history-bearing run.
-3. Run the full fresh-B smoke under a new run ID, on the same frozen backend,
-   with reverse counterbalancing enabled on every arm. Prompts, parser,
-   scoring rules and exclusion criteria freeze before launch; there are no
-   edits afterward, only results.
+After an external audit on 6 October, the owner replaced further prompt repair
+with a transfer-table assay. On each new instance, the old answer (X), the old
+rule applied to the new task (Z), and the correct update (Y) make different
+predictions. This distinguishes persistence of the old rule from copying the old
+answer. The minimum meaningful effect was fixed at 5 percentage points (5pp),
+and the unconditional behavioral contrast became primary.
+
+On 12–13 October a labeled 64-instance smoke pilot (32 cells × 2 instances)
+ran on Modal across five arms, with 832 calls in total. It completed on
+13 October: 832/832 records saved and hash-verified, zero errors. Every arm
+behaved as designed, with 128/128 strict-correct per arm. `fresh_A` and
+`A_no_change` chose the A-optimal answer in all 128 slots each; `A_to_B` and
+`describe_to_B` chose the B-correct answer in all 256 switch slots, with zero
+old-rule carryover; `fresh_B` chose B in all 128 slots.
+
+This is a ceiling-level null, with zero variance between arms at pilot
+resolution. The assay as configured showed no detectable hysteresis pressure.
+The discrimination may have been too easy: fresh B alone was perfect. That is a
+limit on this measuring stick, not evidence that normative hysteresis does or
+does not exist. This was explicitly a smaller smoke design, with a 95% interval
+widening to about ±34pp; it cannot settle the fixed 5pp effect. No experimental
+result on NH exists.
+
+The caveats remain attached to the milestone. The pilot ran across three
+invocations, with restart history and every record individually hash-valid.
+Six `describe_to_B` planning records hit the 1024-token cap, a known, disclosed
+condition. Modal spend was unsettled at report time. The Oct 6–13 run records,
+evidence pack, Modal worker source, and environment/pyenv pins are not yet in
+this repository; this account reports the owner's verified facts rather than an
+independent repository audit of those artifacts.
+
+## 15. What comes next
+
+The owner's next steps are a full 128-instance pilot of the same design, then a
+powered held-out run. A harder-discrimination redesign is under consideration
+because fresh B alone solves the current tables.
 
 The standard from section 11 stands: an experiment that distinguishes
-explanations, including ones that weaken the original hypothesis. The
-instrument now exists to hold the next results to it.
+explanations, including ones that weaken the original hypothesis. Component
+competence, instrument behavior, and a measurement of NH remain separate claims.
